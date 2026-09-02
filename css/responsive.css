@@ -267,7 +267,10 @@
 
 /* ── Reduced Motion Preference ──────────────────── */
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -289,5 +292,40 @@
     .hero-content {
         opacity: 1 !important;
         transform: none !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE NAV TOUCH FIX
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+    /* Hidden overlay must NEVER capture touches */
+    .nav-mobile-overlay {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* Overlay captures touches ONLY when menu is open */
+    .nav-mobile-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    /* Hidden mobile menu must NEVER capture touches */
+    .nav-mobile-menu {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* Menu captures touches ONLY when open */
+    .nav-mobile-menu.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 }
