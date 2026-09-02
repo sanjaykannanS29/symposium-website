@@ -11,6 +11,25 @@ const Registration = {
         this.bindSubmit();
         this.bindAcknowledgement();
         this.bindInputClearErrors();
+        this.bindReturnBtn();
+    },
+
+    /**
+     * Bind Back to Home button to perform smooth in-page navigation without reloading
+     */
+    bindReturnBtn() {
+        const btn = document.getElementById('regReturnBtn');
+        if (!btn) return;
+
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const heroSection = document.getElementById('hero');
+            if (heroSection) {
+                heroSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
     },
 
     /**
@@ -150,7 +169,35 @@ const Registration = {
         // Acknowledgement
         if (!Validator.validateAcknowledgement()) valid = false;
 
+        if (!valid) {
+            this.scrollToFirstError();
+        }
+
         return valid;
+    },
+
+    /**
+     * Automatically scroll to and focus the first invalid field in the registration form
+     */
+    scrollToFirstError() {
+        const firstErrorEl = document.querySelector('.form-input.error, .form-select.error, .reg-checkbox.error, .form-error.visible');
+        if (firstErrorEl) {
+            let targetInput = firstErrorEl;
+            if (!firstErrorEl.matches('input, select, textarea')) {
+                const group = firstErrorEl.closest('.form-group, .form-row, .reg-acknowledge');
+                if (group) {
+                    targetInput = group.querySelector('input, select, textarea') || firstErrorEl;
+                }
+            }
+
+            targetInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            if (typeof targetInput.focus === 'function') {
+                try {
+                    targetInput.focus({ preventScroll: true });
+                } catch (e) { }
+            }
+        }
     },
 
     /**
@@ -372,7 +419,14 @@ const Registration = {
         if (form) form.style.display = 'none';
         if (errorBanner) errorBanner.classList.remove('visible');
         if (success) success.classList.add('active');
-        if (regIdEl) regIdEl.textContent = `Registration ID: ${registrationId || 'DRK26-CONFIRMED'}`;
+        if (regIdEl) regIdEl.textContent = registrationId || 'DRK26-CONFIRMED';
+
+        // Automatically move user to success message screen with smooth scrolling
+        if (success) {
+            setTimeout(() => {
+                success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 50);
+        }
 
         // Trigger Registration Success Fire Visual Cinematic
         if (window.OpeningEngine && typeof window.OpeningEngine.playRegistrationSuccessCinematic === 'function') {
