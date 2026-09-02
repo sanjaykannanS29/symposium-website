@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAKEN'26 — National Level Technical Symposium | AAMEC ECE</title>
+    <meta name="description"
+        content="Official website for DRAKEN'26, National Level Technical Symposium organized by ECE DRAGONS, Department of Electronics & Communication Engineering, Anjalai Ammal Mahalingam Engineering College on 26 September 2026.">
+
+    <!-- Google Fonts: Space Grotesk & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body class="opening-active">
+
+    <!-- ═══════════════════════════════════════════════
+         TOP COLLEGE HEADER (Prominent Branding)
+         ═══════════════════════════════════════════════ -->
+    <header class="college-header" id="collegeHeader">
+        <div class="container">
+            <div class="college-header-inner">
+                <div class="college-logo-wrapper">
+                    <img src="assets/images/aamec_logo.webp" alt="Anjalai Ammal Mahalingam Engineering College Logo"
+                        class="college-logo-img">
+                </div>
+                <div class="college-header-text">
+                    <h1 class="college-title">ANJALAI AMMAL MAHALINGAM ENGINEERING COLLEGE</h1>
+                    <p class="college-affiliation">Affiliated to Anna University, Chennai | A NAAC Accredited
+                        Institution</p>
+                    <p class="college-dept">Department of Electronics &amp; Communication Engineering — ECE DRAGONS</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════
+         STICKY NAVIGATION BAR
+         ═══════════════════════════════════════════════ -->
+    <nav class="navbar" id="navbar" aria-label="Main navigation">
+        <div class="container">
+            <a href="#hero" class="nav-brand" aria-label="DRAKEN 26 Home">
+                DRAKEN<span class="accent">'26</span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="nav-links" id="navLinks">
+                <a href="#hero" class="nav-link" data-section="hero">HOME</a>
+                <a href="#events" class="nav-link" data-section="events">EVENTS</a>
+                <a href="#rules" class="nav-link" data-section="rules">RULES</a>
+                <a href="#faq" class="nav-link" data-section="faq">FAQ</a>
+                <a href="#registration" class="nav-link nav-cta" data-section="registration">REGISTER NOW</a>
+                <a href="#location" class="nav-link" data-section="location">LOCATION</a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button class="nav-hamburger" id="navHamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="nav-mobile-overlay" id="navMobileOverlay"></div>
+    <div class="nav-mobile-menu" id="navMobileMenu" role="navigation" aria-label="Mobile navigation">
+        <a href="#hero" class="nav-mobile-link" data-section="hero">HOME</a>
+        <a href="#events" class="nav-mobile-link" data-section="events">EVENTS</a>
+        <a href="#rules" class="nav-mobile-link" data-section="rules">RULES</a>
+        <a href="#faq" class="nav-mobile-link" data-section="faq">FAQ</a>
+        <a href="#registration" class="nav-mobile-link nav-mobile-cta" data-section="registration">REGISTER NOW</a>
+        <a href="#location" class="nav-mobile-link" data-section="location">LOCATION</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         MAIN WEBSITE CONTENT
+         ═══════════════════════════════════════════════ -->
+    <main class="main-site" id="mainSite">
+
+        <!-- 1. OPENING CINEMATIC CANVAS OVERLAY & HERO -->
+        <section class="hero" id="hero">
+            <!-- Fullscreen Dragon Awakening Canvas Overlay -->
+            <canvas class="hero-awakening-canvas" id="heroAwakeningCanvas"></canvas>
+
+            <div class="hero-bg-glow" id="heroBgGlow"></div>
+
+            <div class="container">
+                <div class="hero-content" id="heroContent">
+                    <h1 class="hero-title" id="heroTitle">DRAKEN<span class="accent">'26</span></h1>
+
+                    <p class="hero-type">A NATIONAL LEVEL TECHNICAL SYMPOSIUM</p>
+
+                    <div class="hero-badges">
+                        <span class="hero-badge">26 SEPTEMBER 2026</span>
+                        <span class="hero-badge">FREE REGISTRATION</span>
+                        <span class="hero-badge">AAMEC, KOVILVENNI</span>
+                    </div>
+
+                    <p class="hero-tagline">UNLEASH. INNOVATE. INSPIRE.</p>
+
+                    <!-- Countdown Box -->
+                    <div class="hero-countdown-box">
+                        <span class="countdown-title">EVENT STARTS IN</span>
+                        <div class="hero-countdown-wrapper" id="countdownTimer">
+                            <div class="countdown-unit">
+                                <div class="countdown-value" id="countdownDays">00</div>
+                                <div class="countdown-label">DAYS</div>
+                            </div>
+                            <span class="countdown-separator" aria-hidden="true">:</span>
+                            <div class="countdown-unit">
+                                <div class="countdown-value" id="countdownHours">00</div>
+                                <div class="countdown-label">HOURS</div>
+                            </div>
+                            <span class="countdown-separator" aria-hidden="true">:</span>
+                            <div class="countdown-unit">
+                                <div class="countdown-value" id="countdownMinutes">00</div>
+                                <div class="countdown-label">MINUTES</div>
+                            </div>
+                            <span class="countdown-separator" aria-hidden="true">:</span>
+                            <div class="countdown-unit">
+                                <div class="countdown-value" id="countdownSeconds">00</div>
+                                <div class="countdown-label">SECONDS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-cta-wrapper">
+                        <a href="#registration" class="hero-cta" id="heroCta">
+                            REGISTER NOW →
+                        </a>
+                        <p class="hero-status-tag">Registration closes 18 September 2026</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 2. EVENTS SECTION -->
+        <section class="section events-section" id="events">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">FLAGSHIP COMPETITIONS</span>
+                    <h2 class="section-title">EVENTS</h2>
+                    <p class="section-subtitle">Six premier events designed to challenge your technical intellect and
+                        creative potential.</p>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+
+                <!-- Technical Events -->
+                <div class="events-category reveal" id="technicalEvents">
+                    <h3 class="events-category-label">TECHNICAL EVENTS</h3>
+                    <div class="events-grid" id="technicalEventsGrid">
+                        <!-- Populated by js/events.js -->
+                    </div>
+                </div>
+
+                <!-- Non-Technical Events -->
+                <div class="events-category reveal mt-8" id="nonTechnicalEvents">
+                    <h3 class="events-category-label">NON-TECHNICAL EVENTS</h3>
+                    <div class="events-grid" id="nonTechnicalEventsGrid">
+                        <!-- Populated by js/events.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- EVENT DETAILS MODAL -->
+        <div class="modal-overlay" id="eventModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
+            <div class="modal" id="eventModalContent">
+                <div class="modal-header">
+                    <button class="modal-close" id="modalClose" aria-label="Close modal" type="button">✕</button>
+                    <div class="modal-category" id="modalCategory"></div>
+                    <h3 class="modal-name" id="modalName"></h3>
+                    <p class="modal-tagline" id="modalTagline"></p>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 3. RULES SECTION (Separate Section) -->
+        <section class="section rules-section" id="rules">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">GENERAL GUIDELINES</span>
+                    <h2 class="section-title">RULES AND REGULATIONS</h2>
+                    <p class="section-subtitle">Official code of conduct for all participating teams in DRAKEN'26.</p>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+
+                <div class="rules-container reveal">
+                    <div class="rules-list" id="rulesList">
+                        <!-- Populated by js/main.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 4. FAQ SECTION (Separate Section Immediately Following Rules) -->
+        <section class="section faq-section" id="faq">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">INFORMATION</span>
+                    <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+                    <p class="section-subtitle">Everything you need to know about participation, food, and shortlisting.
+                    </p>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+
+                <div class="faq-container reveal">
+                    <div class="faq-list" id="faqList">
+                        <!-- Populated by js/main.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 5. REGISTRATION SECTION -->
+        <section class="section registration-section" id="registration">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">FREE TEAM REGISTRATION</span>
+                    <h2 class="section-title">REGISTRATION FORM</h2>
+                    <p class="section-subtitle">Complete your 2-member team details below. Online registration closes on
+                        18 September 2026.</p>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+
+                <div class="registration-wrapper reveal">
+
+                    <!-- Error Banner -->
+                    <div class="reg-error-banner" id="regErrorBanner">
+                        <p class="reg-error-banner-text" id="regErrorText"></p>
+                    </div>
+
+                    <!-- Single-Page Registration Form -->
+                    <form id="registrationForm" novalidate autocomplete="off">
+
+                        <!-- SECTION 1: Team & Events -->
+                        <div class="reg-form-block">
+                            <h3 class="reg-block-title">1. Team &amp; Event Selection</h3>
+
+                            <div class="form-group">
+                                <label class="form-label" for="teamName">Team Name <span
+                                        class="required">*</span></label>
+                                <input type="text" class="form-input" id="teamName" name="teamName"
+                                    placeholder="Enter your unique team name" required maxlength="60">
+                                <p class="form-error" id="teamNameError"></p>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="techEventSelect">Technical Event <span
+                                            class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <select class="form-select" id="techEventSelect" name="techEventSelect"
+                                            required>
+                                            <option value="">Select Technical Event</option>
+                                            <option value="unveil">UNVEIL — Paper Presentation</option>
+                                            <option value="fuse">FUSE — Ideathon</option>
+                                            <option value="manifest">MANIFEST — Project Expo</option>
+                                        </select>
+                                    </div>
+                                    <p class="form-error" id="techEventError"></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="nonTechEventSelect">Non-Technical Event <span
+                                            class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <select class="form-select" id="nonTechEventSelect" name="nonTechEventSelect"
+                                            required>
+                                            <option value="">Select Non-Technical Event</option>
+                                            <option value="cinora">CINORA — Short Film Challenge</option>
+                                            <option value="gameverse">GAME VERSE — Rapid Mini-Games</option>
+                                            <option value="aamec-got-talent">AAMEC GOT TALENT — Entertainment Challenge
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <p class="form-error" id="nonTechEventError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: Member 1 Details -->
+                        <div class="reg-form-block mt-8">
+                            <h3 class="reg-block-title">2. Member 1 Details (Team Lead)</h3>
+
+                            <div class="form-group">
+                                <label class="form-label" for="m1Name">Full Name <span class="required">*</span></label>
+                                <input type="text" class="form-input" id="m1Name" name="m1Name"
+                                    placeholder="Enter full name" required>
+                                <p class="form-error" id="m1NameError"></p>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="m1RegNo">Register Number <span
+                                            class="required">*</span></label>
+                                    <input type="text" class="form-input" id="m1RegNo" name="m1RegNo"
+                                        placeholder="Enter official register number" required>
+                                    <p class="form-error" id="m1RegNoError"></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="m1College">College <span
+                                            class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <select class="form-select" id="m1College" name="m1College" required>
+                                            <option value="">Select College Option</option>
+                                            <option value="AAMEC">AAMEC — Anjalai Ammal Mahalingam Engineering College
+                                            </option>
+                                            <option value="Other">Other College</option>
+                                        </select>
+                                    </div>
+                                    <p class="form-error" id="m1CollegeError"></p>
+                                </div>
+                            </div>
+
+                            <!-- Other college inputs for Member 1 -->
+                            <div class="form-row" id="m1OtherCollegeFields" style="display: none;">
+                                <div class="form-group">
+                                    <label class="form-label" for="m1CollegeName">College Name <span
+                                            class="required">*</span></label>
+                                    <input type="text" class="form-input" id="m1CollegeName" name="m1CollegeName"
+                                        placeholder="Enter full college name">
+                                    <p class="form-error" id="m1CollegeNameError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="m1CollegeCode">College Code <span
+                                            class="required">*</span></label>
+                                    <input type="text" class="form-input" id="m1CollegeCode" name="m1CollegeCode"
+                                        placeholder="Enter college code">
+                                    <p class="form-error" id="m1CollegeCodeError"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="m1Email">Email Address <span
+                                            class="required">*</span></label>
+                                    <input type="email" class="form-input" id="m1Email" name="m1Email"
+                                        placeholder="Enter valid email address" required>
+                                    <p class="form-error" id="m1EmailError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="m1Mobile">Mobile Number <span
+                                            class="required">*</span></label>
+                                    <input type="tel" class="form-input" id="m1Mobile" name="m1Mobile"
+                                        placeholder="10-digit mobile number" required maxlength="10">
+                                    <p class="form-error" id="m1MobileError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 3: Member 2 Details -->
+                        <div class="reg-form-block mt-8">
+                            <h3 class="reg-block-title">3. Member 2 Details</h3>
+
+                            <div class="form-group">
+                                <label class="form-label" for="m2Name">Full Name <span class="required">*</span></label>
+                                <input type="text" class="form-input" id="m2Name" name="m2Name"
+                                    placeholder="Enter full name" required>
+                                <p class="form-error" id="m2NameError"></p>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="m2RegNo">Register Number <span
+                                            class="required">*</span></label>
+                                    <input type="text" class="form-input" id="m2RegNo" name="m2RegNo"
+                                        placeholder="Enter official register number" required>
+                                    <p class="form-error" id="m2RegNoError"></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="m2College">College <span
+                                            class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <select class="form-select" id="m2College" name="m2College" required>
+                                            <option value="">Select College Option</option>
+                                            <option value="AAMEC">AAMEC — Anjalai Ammal Mahalingam Engineering College
+                                            </option>
+                                            <option value="Other">Other College</option>
+                                        </select>
+                                    </div>
+                                    <p class="form-error" id="m2CollegeError"></p>
+                                </div>
+                            </div>
+
+                            <!-- Other college inputs for Member 2 -->
+                            <div class="form-row" id="m2OtherCollegeFields" style="display: none;">
+                                <div class="form-group">
+                                    <label class="form-label" for="m2CollegeName">College Name <span
+                                            class="required">*</span></label>
+                                    <input type="text" class="form-input" id="m2CollegeName" name="m2CollegeName"
+                                        placeholder="Enter full college name">
+                                    <p class="form-error" id="m2CollegeNameError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="m2CollegeCode">College Code <span
+                                            class="required">*</span></label>
+                                    <input type="text" class="form-input" id="m2CollegeCode" name="m2CollegeCode"
+                                        placeholder="Enter college code">
+                                    <p class="form-error" id="m2CollegeCodeError"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="m2Email">Email Address <span
+                                            class="required">*</span></label>
+                                    <input type="email" class="form-input" id="m2Email" name="m2Email"
+                                        placeholder="Enter valid email address" required>
+                                    <p class="form-error" id="m2EmailError"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="m2Mobile">Mobile Number <span
+                                            class="required">*</span></label>
+                                    <input type="tel" class="form-input" id="m2Mobile" name="m2Mobile"
+                                        placeholder="10-digit mobile number" required maxlength="10">
+                                    <p class="form-error" id="m2MobileError"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: Confirmation & Submission -->
+                        <div class="reg-form-block mt-8">
+                            <div class="reg-food-note">
+                                <p class="reg-food-note-text">
+                                    <strong>Food Information Note:</strong>
+                                    Food arrangements are available for inter-college participants. Other participants
+                                    are requested to make their own arrangements.
+                                </p>
+                            </div>
+
+                            <div class="reg-acknowledge">
+                                <input type="checkbox" class="reg-checkbox" id="rulesAgree" required>
+                                <label class="reg-acknowledge-text" for="rulesAgree">
+                                    I have read and agree to all DRAKEN'26 rules and event guidelines.
+                                </label>
+                            </div>
+                            <p class="form-error" id="rulesAgreeError"></p>
+
+                            <button type="submit" class="btn-reg btn-reg-submit mt-4" id="regSubmitBtn" disabled>
+                                SUBMIT REGISTRATION
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <!-- Success Confirmation Card & Cinematic Reveal -->
+                    <div class="reg-success" id="regSuccess">
+                        <div class="reg-success-fire-effect" id="regSuccessFireEffect"></div>
+                        <h3 class="section-title" style="font-size: 1.8rem; margin-bottom: 24px;">REGISTRATION CONFIRMED
+                        </h3>
+
+                        <div class="reg-complete-token-card">
+                            <span class="token-label">REGISTRATION ID</span>
+                            <h3 class="token-value" id="regSuccessId">DRK26-XXXX</h3>
+                            <p class="token-desc">Keep this Registration ID safe for your record.</p>
+                        </div>
+
+                        <div class="reg-disclaimers-box mt-8">
+                            <p style="font-size: 0.9rem; color: var(--text-primary); margin-bottom: 8px;">Confirmation
+                                email sent to your registered email address.</p>
+                            <p
+                                style="font-size: 0.8rem; color: var(--text-tertiary); max-width: 540px; margin: 0 auto; line-height: 1.6;">
+                                Registration confirmation does not guarantee final participation. Only shortlisted
+                                participants will be eligible to participate. Shortlisted teams will receive a separate
+                                confirmation email.
+                            </p>
+                        </div>
+
+                        <button type="button" class="btn-reg btn-reg-submit mt-8" id="regReturnBtn"
+                            onclick="window.location.reload();" style="max-width: 260px; margin: 24px auto 0;">
+                            BACK TO HOME
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 6. ORGANIZERS & COORDINATORS SECTION -->
+        <section class="section organizers-section" id="organizers">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">SYMPOSIUM LEADERSHIP</span>
+                    <h2 class="section-title">ORGANIZERS &amp; COORDINATORS</h2>
+                    <p class="section-subtitle">Dedicated faculty and student leadership driving DRAKEN'26.</p>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+
+                <div class="organizers-grid reveal">
+                    <!-- Principal -->
+                    <div class="organizer-card">
+                        <span class="organizer-role">PRINCIPAL</span>
+                        <h3 class="organizer-name">Dr. K. Velumurugan</h3>
+                        <p class="organizer-inst">Anjalai Ammal Mahalingam Engineering College</p>
+                    </div>
+
+                    <!-- HOD -->
+                    <div class="organizer-card">
+                        <span class="organizer-role">HOD – ECE</span>
+                        <h3 class="organizer-name">Dr. R. Rajaganapathi</h3>
+                        <p class="organizer-inst">Department of Electronics &amp; Communication Engineering</p>
+                    </div>
+
+                    <!-- Faculty Coordinators -->
+                    <div class="organizer-card">
+                        <span class="organizer-role">FACULTY COORDINATORS</span>
+                        <div class="organizer-list">
+                            <div class="organizer-item">
+                                <h4 class="organizer-name">Dr. V. Rajakani</h4>
+                                <span class="organizer-designation">AP / ECE</span>
+                            </div>
+                            <div class="organizer-item">
+                                <h4 class="organizer-name">Dr. G. Murugesan</h4>
+                                <span class="organizer-designation">ASP / ECE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Coordinators -->
+                    <div class="organizer-card">
+                        <span class="organizer-role">STUDENT COORDINATORS</span>
+                        <div class="organizer-list">
+                            <div class="organizer-item">
+                                <h4 class="organizer-name">R.S. Aswin Saranraj</h4>
+                                <span class="organizer-designation">Student Coordinator</span>
+                            </div>
+                            <div class="organizer-item">
+                                <h4 class="organizer-name">S. Sajith Ahamed</h4>
+                                <span class="organizer-designation">Student Coordinator</span>
+                            </div>
+                            <div class="organizer-item">
+                                <h4 class="organizer-name">I. Divya</h4>
+                                <span class="organizer-designation">Student Coordinator</span>
+                            </div>
+                            <div class="organizer-item">
+                                <h4 class="organizer-name">A. Roopa</h4>
+                                <span class="organizer-designation">Student Coordinator</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 7. LOCATION SECTION -->
+        <section class="section location-section" id="location">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-label">VENUE &amp; DIRECTIONS</span>
+                    <h2 class="section-title">SYMPOSIUM LOCATION</h2>
+                    <div class="section-divider" aria-hidden="true"></div>
+                </div>
+
+                <div class="location-wrapper reveal">
+                    <div class="location-info">
+                        <h3 class="location-title">ANJALAI AMMAL MAHALINGAM ENGINEERING COLLEGE (AAMEC)</h3>
+                        <p class="location-dept-text">Department of Electronics &amp; Communication Engineering — ECE
+                            DRAGONS</p>
+                        <p class="location-address">
+                            Kovilvenni, Tiruvarur District<br>
+                            Tamil Nadu — 614403, India
+                        </p>
+                        <div class="location-contact-box mt-4">
+                            <p class="contact-line"><strong>Official Phone:</strong> <a href="tel:+918110013816"
+                                    style="color: var(--orange-bright);">811-001-3816</a></p>
+                            <p class="contact-line"><strong>Official Email:</strong> <a
+                                    href="mailto:drakenece26@gmail.com"
+                                    style="color: var(--orange-bright);">drakenece26@gmail.com</a></p>
+                        </div>
+                        <a href="https://maps.google.com/?q=Anjalai+Ammal+Mahalingam+Engineering+College+Kovilvenni"
+                            class="btn-secondary mt-8" id="locationDirections" target="_blank"
+                            rel="noopener noreferrer">
+                            GET DIRECTIONS →
+                        </a>
+                    </div>
+                    <div class="location-map">
+                        <iframe id="locationMap"
+                            src="https://maps.google.com/maps?q=Anjalai+Ammal+Mahalingam+Engineering+College+Kovilvenni&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                            title="AAMEC Kovilvenni Location Map" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════
+         7. FOOTER SECTION
+         ═══════════════════════════════════════════════ -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-brand-name">DRAKEN<span class="accent">'26</span></div>
+                    <p class="footer-type">A NATIONAL LEVEL TECHNICAL SYMPOSIUM</p>
+                    <p class="footer-college-main">ANJALAI AMMAL MAHALINGAM ENGINEERING COLLEGE</p>
+                    <p class="footer-college-sub">
+                        ECE DRAGONS | Department of Electronics &amp; Communication Engineering<br>
+                        Kovilvenni, Thiruvarur (DT) – 614403, Tamil Nadu, India
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <h4 class="footer-contact-title">OFFICIAL CONTACT</h4>
+                    <p class="footer-contact-item">Phone: <a href="tel:+918110013816"
+                            style="color: var(--text-primary);">811-001-3816</a></p>
+                    <p class="footer-contact-item">Email: <a href="mailto:drakenece26@gmail.com"
+                            style="color: var(--orange-bright);">drakenece26@gmail.com</a></p>
+                    <p class="footer-contact-item">Event Date: 26 September 2026</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 DRAKEN'26 — ECE DRAGONS. All rights reserved.</p>
+                <p class="footer-location">AAMEC, Kovilvenni, Thiruvarur District, Tamil Nadu — 614403</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/registration.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
