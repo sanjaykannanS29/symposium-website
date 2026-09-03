@@ -7,7 +7,7 @@ const CONFIG = {
 
     /* ── Backend Endpoint ─────────────────────────────── */
     // Deployed Google Apps Script Web App URL
-    API_URL: 'https://script.google.com/macros/s/AKfycbxjElr2hAN0iIGpnsG-a5ZSQuWtGoqlGtnpD6FpO6NJQ5w2HSvCAdURoV6RPDKXCPUN/exec',
+    API_URL: 'https://script.google.com/macros/s/AKfycbxoBnam_fBf93tqijDs5bolZvuNsRGadmUE-CW6boewhrHf7FEiVdWueK54MZ7zPQqz/exec',
 
     /* ── Registration Closing & Countdown Dates ───────── */
     REGISTRATION_CLOSE_DATE: '2026-09-18T23:59:59+05:30',

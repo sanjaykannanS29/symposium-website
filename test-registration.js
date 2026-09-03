@@ -9,27 +9,27 @@
 const https = require('https');
 const { URL } = require('url');
 
-const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxjElr2hAN0iIGpnsG-a5ZSQuWtGoqlGtnpD6FpO6NJQ5w2HSvCAdURoV6RPDKXCPUN/exec";
+const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxoBnam_fBf93tqijDs5bolZvuNsRGadmUE-CW6boewhrHf7FEiVdWueK54MZ7zPQqz/exec";
 
 const TEST_PAYLOAD = {
-    teamName: "TEST TEAM - DRAKEN26",
+    teamName: "DRAKEN-AUTO-TEST",
     technicalEvent: "UNVEIL",
     nonTechnicalEvent: "GAME VERSE",
     member1: {
-        name: "Test Member 1",
+        name: "DRAKEN Test Member 1",
         registerNumber: "TEST001",
-        collegeName: "Test College",
+        collegeName: "TEST COLLEGE",
         collegeCode: "TEST",
-        email: "sanjaykannan050@gmail.com",
-        mobile: "9000000000"
+        email: "drakenece26@gmail.com",
+        mobile: "9000000001"
     },
     member2: {
-        name: "Test Member 2",
+        name: "DRAKEN Test Member 2",
         registerNumber: "TEST002",
-        collegeName: "Test College",
+        collegeName: "TEST COLLEGE",
         collegeCode: "TEST",
-        email: "testmember2@example.com",
-        mobile: "9000000001"
+        email: "sanjaykannan050@gmail.com",
+        mobile: "9000000002"
     },
     rulesAccepted: true
 };

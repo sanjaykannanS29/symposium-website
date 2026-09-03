@@ -276,7 +276,7 @@ const Registration = {
             submitBtn.classList.add('btn-loading');
         }
 
-        const backendUrl = CONFIG.API_URL || 'https://script.google.com/macros/s/AKfycbxjElr2hAN0iIGpnsG-a5ZSQuWtGoqlGtnpD6FpO6NJQ5w2HSvCAdURoV6RPDKXCPUN/exec';
+        const backendUrl = CONFIG.API_URL || 'https://script.google.com/macros/s/AKfycbxoBnam_fBf93tqijDs5bolZvuNsRGadmUE-CW6boewhrHf7FEiVdWueK54MZ7zPQqz/exec';
         console.log('[DRAKEN26 FRONTEND]: Initiating registration submission to:', backendUrl);
         console.log('[DRAKEN26 PAYLOAD]:', JSON.stringify(data, null, 2));
 
