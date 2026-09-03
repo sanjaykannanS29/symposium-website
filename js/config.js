@@ -25,7 +25,7 @@ const CONFIG = {
     },
 
     /* ── Official Contact ─────────────────────────────── */
-    EMAIL: 'drakenece26@gmail.com',
+    EMAIL: 'drakenece2026@gmail.com',
     PHONE: '811-001-3816',
 
     /* ── Map ──────────────────────────────────────────── */
@@ -273,7 +273,7 @@ const CONFIG = {
         },
         {
             question: 'Who can I contact for official information?',
-            answer: 'You can contact the organizing committee at 811-001-3816 or email drakenece26@gmail.com.'
+            answer: 'You can contact the organizing committee at 811-001-3816 or email drakenece2026@gmail.com.'
         }
     ],
 
@@ -281,8 +281,8 @@ const CONFIG = {
     CONTACTS: {
         officialPhone: '811-001-3816',
         officialPhoneLink: 'tel:+918110013816',
-        officialEmail: 'drakenece26@gmail.com',
-        officialEmailLink: 'mailto:drakenece26@gmail.com',
+        officialEmail: 'drakenece2026@gmail.com',
+        officialEmailLink: 'mailto:drakenece2026@gmail.com',
         principal: { title: 'Principal', name: 'Dr. K. Velumurugan' },
         hod: { title: 'Head of Department (ECE)', name: 'Dr. R. Rajaganapathi' },
         facultyCoordinators: [

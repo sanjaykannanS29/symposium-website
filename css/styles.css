@@ -89,6 +89,19 @@ body.opening-active {
     overflow: hidden;
 }
 
+/* Persistent 3D Dragon Fire & Atmospheric Background Canvas */
+.cinematic-dragon-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.95;
+    transition: opacity var(--transition-base);
+}
+
 /* Ambient Dragon Grid & Smoke Overlay Throughout Site */
 body::before {
     content: '';
@@ -100,6 +113,38 @@ body::before {
     background-size: 64px 64px;
     pointer-events: none;
     z-index: 0;
+}
+
+/* Glass-Metal Cards with 3D Depth & Volcanic Flame Illumination */
+.event-card,
+.rules-item,
+.faq-item,
+.registration-wrapper,
+.organizer-card,
+.location-wrapper {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease, 
+                background-color 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.event-card:hover,
+.organizer-card:hover,
+.rules-item:hover {
+    box-shadow: 0 16px 45px rgba(255, 85, 0, 0.22), 
+                inset 0 1px 1px rgba(255, 120, 0, 0.35);
+    border-color: rgba(255, 102, 0, 0.5);
+}
+
+.registration-wrapper {
+    background: rgba(10, 10, 14, 0.88);
+    border: 1px solid rgba(255, 85, 0, 0.25);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 
+                0 0 40px rgba(255, 85, 0, 0.12);
 }
 
 body.no-scroll { overflow: hidden; }
@@ -538,15 +583,17 @@ ul, ol { list-style: none; }
    2. EVENTS SECTION
    ═══════════════════════════════════════════════════ */
 .events-section {
-    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-    border-top: 1px solid var(--border);
+    background: rgba(5, 5, 7, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 85, 0, 0.25);
 }
 
 .events-category-label { font-family: var(--font-display); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: var(--orange-bright); margin-bottom: 32px; text-align: center; }
 .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 
 .event-card {
-    background: var(--bg-secondary);
+    background: rgba(10, 10, 14, 0.82);
     border: 1px solid var(--border);
     padding: 40px 32px;
     cursor: pointer;
@@ -568,9 +615,9 @@ ul, ol { list-style: none; }
 
 .event-card:hover {
     border-color: var(--orange-border);
-    background: var(--bg-tertiary);
+    background: rgba(22, 22, 32, 0.9);
     transform: translateY(-4px);
-    box-shadow: 0 16px 36px rgba(255, 85, 0, 0.15);
+    box-shadow: 0 16px 36px rgba(255, 85, 0, 0.22);
 }
 
 .event-card:hover::before { height: 100%; }
@@ -611,8 +658,10 @@ ul, ol { list-style: none; }
    3. RULES SECTION (Standalone Section)
    ═══════════════════════════════════════════════════ */
 .rules-section {
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border);
+    background: rgba(5, 5, 7, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 85, 0, 0.25);
 }
 
 .rules-container {
@@ -626,7 +675,7 @@ ul, ol { list-style: none; }
     display: flex;
     gap: 20px;
     padding: 20px 24px;
-    background: var(--bg-secondary);
+    background: rgba(10, 10, 14, 0.82);
     border: 1px solid var(--border);
     transition: border-color var(--transition-fast);
 }
@@ -651,8 +700,10 @@ ul, ol { list-style: none; }
    4. FAQ SECTION (Standalone Section Immediately Following Rules)
    ═══════════════════════════════════════════════════ */
 .faq-section {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border);
+    background: rgba(5, 5, 7, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 85, 0, 0.25);
 }
 
 .faq-container {
@@ -664,7 +715,7 @@ ul, ol { list-style: none; }
 
 .faq-item {
     border: 1px solid var(--border);
-    background: var(--bg-primary);
+    background: rgba(10, 10, 14, 0.82);
     transition: border-color var(--transition-fast);
 }
 
@@ -717,8 +768,10 @@ ul, ol { list-style: none; }
    5. REGISTRATION SECTION
    ═══════════════════════════════════════════════════ */
 .registration-section {
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border);
+    background: rgba(5, 5, 7, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 85, 0, 0.25);
 }
 
 .registration-wrapper {
@@ -764,12 +817,18 @@ ul, ol { list-style: none; }
 @keyframes regSuccessFadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
 .reg-complete-token-card {
-    background: rgba(255, 85, 0, 0.1);
+    background: linear-gradient(135deg, rgba(22, 22, 32, 0.95), rgba(10, 10, 14, 0.95));
     border: 1.5px solid var(--orange-bright);
-    padding: 32px;
-    max-width: 420px;
+    padding: 36px 32px;
+    max-width: 440px;
     margin: 0 auto;
-    box-shadow: 0 0 40px rgba(255, 85, 0, 0.25);
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 0 45px rgba(255, 85, 0, 0.35), inset 0 0 20px rgba(255, 120, 0, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .token-label { font-family: var(--font-display); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.2em; color: var(--orange-bright); display: block; margin-bottom: 8px; }
@@ -784,8 +843,10 @@ ul, ol { list-style: none; }
    6. LOCATION SECTION
    ═══════════════════════════════════════════════════ */
 .location-section {
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--border);
+    background: rgba(5, 5, 7, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 85, 0, 0.25);
 }
 
 .location-wrapper {
@@ -820,7 +881,7 @@ ul, ol { list-style: none; }
 
 .location-contact-box {
     padding: 16px 20px;
-    background: var(--bg-primary);
+    background: rgba(10, 10, 14, 0.82);
     border: 1px solid var(--border);
 }
 
@@ -850,8 +911,10 @@ ul, ol { list-style: none; }
    ORGANIZERS & COORDINATORS SECTION
    ═══════════════════════════════════════════════════ */
 .organizers-section {
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border);
+    background: rgba(5, 5, 7, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 85, 0, 0.25);
 }
 
 .organizers-grid {
@@ -861,7 +924,7 @@ ul, ol { list-style: none; }
 }
 
 .organizer-card {
-    background: var(--bg-secondary);
+    background: rgba(10, 10, 14, 0.82);
     border: 1px solid var(--border);
     padding: 32px 24px;
     display: flex;
@@ -958,8 +1021,10 @@ ul, ol { list-style: none; }
    ═══════════════════════════════════════════════════ */
 .footer {
     padding: 64px 0 36px;
-    border-top: 1px solid var(--border);
-    background: var(--bg-primary);
+    border-top: 1px solid rgba(255, 85, 0, 0.25);
+    background: rgba(5, 5, 7, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .footer-content { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 48px; }

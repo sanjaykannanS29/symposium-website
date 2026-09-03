@@ -20,7 +20,7 @@ const TEST_PAYLOAD = {
         registerNumber: "TEST001",
         collegeName: "TEST COLLEGE",
         collegeCode: "TEST",
-        email: "drakenece26@gmail.com",
+        email: "drakenece2026@gmail.com",
         mobile: "9000000001"
     },
     member2: {
