@@ -1159,17 +1159,360 @@
     };
 
     /* ═══════════════════════════════════════════════════
-       ECE CIRCUIT MINI-GAME & FIERY ERUPTION ENGINE
+       DRAKEN'26 CINEMATIC PROCEDURAL AUDIO ENGINE
+       ═══════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════
+       DRAKEN'26 CINEMATIC PROCEDURAL AUDIO ENGINE
+       (Silent Browsing — Sound Triggers ONLY on Interaction)
+       ═══════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════
+       DRAKEN'26 CINEMATIC PROCEDURAL AUDIO ENGINE
+       (Minimal, Silent Browsing — Capacitor Sweep + Deep "DURRR" Release + Dragon Roar ONLY)
+       ═══════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════
+       DRAKEN'26 CINEMATIC PROCEDURAL AUDIO ENGINE
+       Exact 1-to-1 Sound Mapping per Final Locked Spec:
+       1. DC POWER      -> Short realistic electrical power activation
+       2. KNIFE SWITCH  -> Short realistic mechanical knife switch latch
+       3. RESISTOR      -> Subtle realistic current flow sound
+       4. CAPACITOR     -> ONE continuous evolving charging sweep
+       5. FINALE RELEASE-> ONE deep cinematic "DURRRRRR" electrical impact
+       6. DRAGON ROAR   -> 4-second organic chest-resonant dragon roar
+       ═══════════════════════════════════════════════════ */
+    const DrakenCinematicAudioEngine = {
+        ctx: null,
+        initialized: false,
+
+        init() {
+            // Spec Section 12: Browsing remains SILENT.
+            // Create AudioContext only on direct user interaction.
+            const initAudioOnUserGesture = () => {
+                if (this.initialized) return;
+                this.ensureContext();
+                if (this.ctx && this.ctx.state === 'running') {
+                    this.initialized = true;
+                    window.removeEventListener('pointerdown', initAudioOnUserGesture);
+                    window.removeEventListener('click', initAudioOnUserGesture);
+                    window.removeEventListener('touchstart', initAudioOnUserGesture);
+                }
+            };
+
+            window.addEventListener('pointerdown', initAudioOnUserGesture, { passive: true });
+            window.addEventListener('click', initAudioOnUserGesture, { passive: true });
+            window.addEventListener('touchstart', initAudioOnUserGesture, { passive: true });
+        },
+
+        ensureContext() {
+            if (!this.ctx) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) this.ctx = new AudioCtx();
+            }
+            if (this.ctx && this.ctx.state === 'suspended') {
+                this.ctx.resume().catch(() => { });
+            }
+        },
+
+        // 1. DC POWER — Short realistic electrical power activation click + low hum
+        playTask1PowerOn() {
+            this.ensureContext();
+            if (!this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                // Power relay click
+                const clickOsc = this.ctx.createOscillator();
+                const clickGain = this.ctx.createGain();
+                clickOsc.type = 'sawtooth';
+                clickOsc.frequency.setValueAtTime(650, now);
+                clickOsc.frequency.exponentialRampToValueAtTime(90, now + 0.09);
+                clickGain.gain.setValueAtTime(0.45, now);
+                clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+                clickOsc.connect(clickGain);
+                clickGain.connect(this.ctx.destination);
+                clickOsc.start(now);
+                clickOsc.stop(now + 0.09);
+
+                // Low electrical power surge hum
+                const humOsc = this.ctx.createOscillator();
+                const humGain = this.ctx.createGain();
+                humOsc.type = 'sine';
+                humOsc.frequency.setValueAtTime(60, now);
+                humGain.gain.setValueAtTime(0.35, now);
+                humGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                humOsc.connect(humGain);
+                humGain.connect(this.ctx.destination);
+                humOsc.start(now);
+                humOsc.stop(now + 0.4);
+            } catch (e) { }
+        },
+
+        // 2. KNIFE SWITCH — Short realistic mechanical knife switch latch + metallic contact
+        playTask2KnifeSwitch() {
+            this.ensureContext();
+            if (!this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                // Mechanical latch impact
+                const metalOsc = this.ctx.createOscillator();
+                const metalGain = this.ctx.createGain();
+                metalOsc.type = 'square';
+                metalOsc.frequency.setValueAtTime(1200, now);
+                metalOsc.frequency.exponentialRampToValueAtTime(180, now + 0.08);
+                metalGain.gain.setValueAtTime(0.5, now);
+                metalGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                metalOsc.connect(metalGain);
+                metalGain.connect(this.ctx.destination);
+                metalOsc.start(now);
+                metalOsc.stop(now + 0.08);
+
+                // Metallic contact snap
+                const snapOsc = this.ctx.createOscillator();
+                const snapGain = this.ctx.createGain();
+                snapOsc.type = 'sawtooth';
+                snapOsc.frequency.setValueAtTime(2400, now + 0.015);
+                snapOsc.frequency.exponentialRampToValueAtTime(220, now + 0.09);
+                snapGain.gain.setValueAtTime(0.35, now + 0.015);
+                snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+                snapOsc.connect(snapGain);
+                snapGain.connect(this.ctx.destination);
+                snapOsc.start(now + 0.015);
+                snapOsc.stop(now + 0.09);
+            } catch (e) { }
+        },
+
+        // 3. RESISTOR — Dedicated realistic current-flow sound through resistive load
+        playTask3Resistor() {
+            this.ensureContext();
+            if (!this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                const dur = 0.38;
+
+                // 1. Current flow through resistive element (warm 180Hz -> 320Hz load surge)
+                const flowOsc = this.ctx.createOscillator();
+                const flowGain = this.ctx.createGain();
+                const flowFilter = this.ctx.createBiquadFilter();
+
+                flowOsc.type = 'triangle';
+                flowOsc.frequency.setValueAtTime(180, now);
+                flowOsc.frequency.exponentialRampToValueAtTime(320, now + dur);
+
+                flowFilter.type = 'lowpass';
+                flowFilter.frequency.setValueAtTime(1200, now);
+                flowFilter.frequency.exponentialRampToValueAtTime(600, now + dur);
+
+                flowGain.gain.setValueAtTime(0.001, now);
+                flowGain.gain.linearRampToValueAtTime(0.48, now + 0.05);
+                flowGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+                flowOsc.connect(flowFilter);
+                flowFilter.connect(flowGain);
+                flowGain.connect(this.ctx.destination);
+                flowOsc.start(now);
+                flowOsc.stop(now + dur);
+
+                // 2. High-precision current load ionization sizzle (ceramic resistor current dissipation)
+                const loadOsc = this.ctx.createOscillator();
+                const loadGain = this.ctx.createGain();
+                const loadFilter = this.ctx.createBiquadFilter();
+
+                loadOsc.type = 'sawtooth';
+                loadOsc.frequency.setValueAtTime(420, now);
+                loadOsc.frequency.exponentialRampToValueAtTime(210, now + dur * 0.8);
+
+                loadFilter.type = 'bandpass';
+                loadFilter.frequency.setValueAtTime(750, now);
+                loadFilter.Q.setValueAtTime(3.0, now);
+
+                loadGain.gain.setValueAtTime(0.001, now);
+                loadGain.gain.linearRampToValueAtTime(0.35, now + 0.03);
+                loadGain.gain.exponentialRampToValueAtTime(0.001, now + dur * 0.8);
+
+                loadOsc.connect(loadFilter);
+                loadFilter.connect(loadGain);
+                loadGain.connect(this.ctx.destination);
+                loadOsc.start(now);
+                loadOsc.stop(now + dur * 0.8);
+            } catch (e) { }
+        },
+
+        // 4. CAPACITOR — Continuous progressive charging sweep (low -> medium -> strong -> high)
+        playCapacitorChargingSweep(durSec) {
+            this.ensureContext();
+            if (!this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                const dur = durSec || 1.2;
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(110, now);
+                osc.frequency.exponentialRampToValueAtTime(1600, now + dur);
+
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(250, now);
+                filter.frequency.exponentialRampToValueAtTime(4000, now + dur);
+
+                gain.gain.setValueAtTime(0.04, now);
+                gain.gain.linearRampToValueAtTime(0.38, now + dur * 0.9);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + dur);
+            } catch (e) { }
+        },
+
+        // 5. MAIN FINAL POWER RELEASE — DEEP POWERFUL "DURRRRRR" ELECTRICAL IMPACT SOUND
+        playFinalPowerReleaseImpact() {
+            this.ensureContext();
+            if (!this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                const dur = 1.8;
+
+                // Heavy Sawtooth Low-End Energy Release ("DURRRRRR")
+                const powerOsc = this.ctx.createOscillator();
+                const powerGain = this.ctx.createGain();
+                const powerFilter = this.ctx.createBiquadFilter();
+
+                powerOsc.type = 'sawtooth';
+                powerOsc.frequency.setValueAtTime(180, now);
+                powerOsc.frequency.exponentialRampToValueAtTime(42, now + dur);
+
+                powerFilter.type = 'lowpass';
+                powerFilter.frequency.setValueAtTime(650, now);
+                powerFilter.frequency.exponentialRampToValueAtTime(120, now + dur);
+
+                powerGain.gain.setValueAtTime(0.001, now);
+                powerGain.gain.linearRampToValueAtTime(0.75, now + 0.1);
+                powerGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+                powerOsc.connect(powerFilter);
+                powerFilter.connect(powerGain);
+                powerGain.connect(this.ctx.destination);
+                powerOsc.start(now);
+                powerOsc.stop(now + dur);
+
+                // Deep Sub-Bass Chest Impact Surge
+                const subOsc = this.ctx.createOscillator();
+                const subGain = this.ctx.createGain();
+
+                subOsc.type = 'sine';
+                subOsc.frequency.setValueAtTime(65, now);
+                subOsc.frequency.exponentialRampToValueAtTime(25, now + dur);
+
+                subGain.gain.setValueAtTime(0.001, now);
+                subGain.gain.linearRampToValueAtTime(0.85, now + 0.08);
+                subGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+                subOsc.connect(subGain);
+                subGain.connect(this.ctx.destination);
+                subOsc.start(now);
+                subOsc.stop(now + dur);
+
+            } catch (e) { }
+        },
+
+        // 6. ~4-SECOND REALISTIC ORGANIC DRAGON ROAR
+        triggerEpicCinematicDragonRoar() {
+            this.ensureContext();
+            if (!this.ctx) return;
+            try {
+                const now = this.ctx.currentTime;
+                const dur = 4.0;
+
+                // 1. Organic Formant Throat Resonance + Pitch Sweep
+                const roarOsc = this.ctx.createOscillator();
+                const roarGain = this.ctx.createGain();
+                const roarFilter = this.ctx.createBiquadFilter();
+
+                roarOsc.type = 'sawtooth';
+                roarOsc.frequency.setValueAtTime(95, now);
+                roarOsc.frequency.exponentialRampToValueAtTime(240, now + 1.2);
+                roarOsc.frequency.exponentialRampToValueAtTime(65, now + dur);
+
+                roarFilter.type = 'lowpass';
+                roarFilter.frequency.setValueAtTime(350, now);
+                roarFilter.frequency.linearRampToValueAtTime(1100, now + 1.2);
+                roarFilter.frequency.exponentialRampToValueAtTime(150, now + dur);
+                roarFilter.Q.setValueAtTime(3.5, now);
+
+                roarGain.gain.setValueAtTime(0.001, now);
+                roarGain.gain.linearRampToValueAtTime(0.8, now + 0.8);
+                roarGain.gain.setValueAtTime(0.8, now + 2.2);
+                roarGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+                roarOsc.connect(roarFilter);
+                roarFilter.connect(roarGain);
+                roarGain.connect(this.ctx.destination);
+                roarOsc.start(now);
+                roarOsc.stop(now + dur);
+
+                // 2. Sub-bass Monster Chest Vibration
+                const subOsc = this.ctx.createOscillator();
+                const subGain = this.ctx.createGain();
+                subOsc.type = 'sine';
+                subOsc.frequency.setValueAtTime(70, now);
+                subOsc.frequency.exponentialRampToValueAtTime(30, now + dur);
+
+                subGain.gain.setValueAtTime(0.001, now);
+                subGain.gain.linearRampToValueAtTime(0.7, now + 0.6);
+                subGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+                subOsc.connect(subGain);
+                subGain.connect(this.ctx.destination);
+                subOsc.start(now);
+                subOsc.stop(now + dur);
+
+                // 3. Layered Organic Noise Texture
+                const bufferSize = this.ctx.sampleRate * dur;
+                const noiseBuf = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                const data = noiseBuf.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * 0.5;
+                }
+                const noiseSrc = this.ctx.createBufferSource();
+                noiseSrc.buffer = noiseBuf;
+
+                const noiseFilter = this.ctx.createBiquadFilter();
+                noiseFilter.type = 'bandpass';
+                noiseFilter.frequency.setValueAtTime(400, now);
+                noiseFilter.frequency.linearRampToValueAtTime(1400, now + 1.2);
+                noiseFilter.frequency.exponentialRampToValueAtTime(250, now + dur);
+                noiseFilter.Q.setValueAtTime(1.8, now);
+
+                const noiseGain = this.ctx.createGain();
+                noiseGain.gain.setValueAtTime(0.001, now);
+                noiseGain.gain.linearRampToValueAtTime(0.35, now + 0.8);
+                noiseGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+                noiseSrc.connect(noiseFilter);
+                noiseFilter.connect(noiseGain);
+                noiseGain.connect(this.ctx.destination);
+                noiseSrc.start(now);
+                noiseSrc.stop(now + dur);
+            } catch (e) { }
+        }
+    };
+
+    /* ═══════════════════════════════════════════════════
+       ECE CIRCUIT CORE MINI-GAME ENGINE (STRICT LOCKED SPEC)
        ═══════════════════════════════════════════════════ */
     const ECECircuitCoreEngine = {
         canvas: null,
         ctx: null,
-        active: false,
-        energyLevel: 0.3, // Initial ALREADY-POWERED State
-        nodes: [],
-        pulses: [],
         shockwaveEl: null,
         wrapperEl: null,
+        energyLevel: 0.0, // Initial state: NO electrical glow
+        completedTasks: 0, // 0: OFF, 1: DC Source ON, 2: Knife Switch Closed, 3: Resistor Active, 4: Capacitor Charging
+        active: false, // True during automatic finale animation
+        nodes: [],
+        pulses: [],
+        lockedMsgTimer: null,
 
         init() {
             this.canvas = document.getElementById('dragonCoreCanvas');
@@ -1179,6 +1522,8 @@
             this.shockwaveEl = document.getElementById('dragonCoreShockwave');
             this.wrapperEl = document.getElementById('eceCircuitWrapper');
 
+            DrakenCinematicAudioEngine.init();
+
             this.resize();
             window.addEventListener('resize', () => {
                 this.resize();
@@ -1187,16 +1532,16 @@
 
             this.initNodes();
 
-            // Interactive Click / Touch Handlers
-            const btnEngage = document.getElementById('btnEngageECECircuit');
-            if (btnEngage) {
-                btnEngage.addEventListener('click', () => this.engageCircuit());
-            }
+            // Component Click Handlers (DC Source -> Knife Switch -> Resistor -> Capacitor)
+            const powerCard = document.getElementById('eceCompPower');
+            const switchCard = document.getElementById('eceCompSwitch');
+            const resistorCard = document.getElementById('eceCompResistor');
+            const capCard = document.getElementById('eceCompCapacitor');
 
-            const cards = document.querySelectorAll('.ece-comp-card');
-            cards.forEach(card => {
-                card.addEventListener('click', () => this.engageCircuit());
-            });
+            if (powerCard) powerCard.addEventListener('click', () => this.handleComponentClick(1));
+            if (switchCard) switchCard.addEventListener('click', () => this.handleComponentClick(2));
+            if (resistorCard) resistorCard.addEventListener('click', () => this.handleComponentClick(3));
+            if (capCard) capCard.addEventListener('click', () => this.handleComponentClick(4));
 
             this.animate();
         },
@@ -1214,121 +1559,316 @@
             const cy = h / 2;
             const radius = Math.min(w, h) * 0.32;
 
-            // ALREADY POWERED INITIAL STATE: All nodes active
             this.nodes = [
-                { id: 'NODE-01', x: cx - radius, y: cy - radius * 0.5, radius: 18, active: true, label: 'PWR 24V' },
-                { id: 'NODE-02', x: cx + radius, y: cy - radius * 0.5, radius: 18, active: true, label: 'SWITCH' },
-                { id: 'NODE-03', x: cx - radius, y: cy + radius * 0.5, radius: 18, active: true, label: '10kΩ LOAD' },
-                { id: 'NODE-04', x: cx + radius, y: cy + radius * 0.5, radius: 18, active: true, label: '100µF CAP' }
+                { id: 'NODE-01', x: cx - radius, y: cy - radius * 0.5, radius: 18, active: false, label: 'DC SOURCE' },
+                { id: 'NODE-02', x: cx + radius, y: cy - radius * 0.5, radius: 18, active: false, label: 'KNIFE SWITCH' },
+                { id: 'NODE-03', x: cx - radius, y: cy + radius * 0.5, radius: 18, active: false, label: 'RESISTOR' },
+                { id: 'NODE-04', x: cx + radius, y: cy + radius * 0.5, radius: 18, active: false, label: 'CAPACITOR' }
             ];
 
             this.pulses = [];
-            for (let i = 0; i < 10; i++) {
-                const n = this.nodes[i % 4];
+        },
+
+        showSubtleLockedMessage() {
+            const statusText = document.getElementById('coreStatusText');
+            if (!statusText) return;
+
+            if (this.lockedMsgTimer) clearTimeout(this.lockedMsgTimer);
+
+            statusText.textContent = 'Complete the previous circuit step first.';
+            statusText.style.color = '#ff6600';
+
+            this.lockedMsgTimer = setTimeout(() => {
+                if (statusText.textContent === 'Complete the previous circuit step first.') {
+                    if (this.completedTasks === 0) {
+                        statusText.textContent = 'POWERED DOWN';
+                        statusText.style.color = 'var(--text-tertiary)';
+                    } else if (this.completedTasks === 1) {
+                        statusText.textContent = 'DC SOURCE ACTIVATED';
+                        statusText.style.color = 'var(--orange-bright)';
+                    } else if (this.completedTasks === 2) {
+                        statusText.textContent = 'KNIFE SWITCH CLOSED';
+                        statusText.style.color = 'var(--orange-bright)';
+                    } else if (this.completedTasks === 3) {
+                        statusText.textContent = 'RESISTOR ACTIVE';
+                        statusText.style.color = 'var(--orange-bright)';
+                    }
+                }
+            }, 2500);
+        },
+
+        handleComponentClick(stepIndex) {
+            // Ignore touches during active finale animation
+            if (this.active) return;
+
+            const powerCard = document.getElementById('eceCompPower');
+            const switchCard = document.getElementById('eceCompSwitch');
+            const resistorCard = document.getElementById('eceCompResistor');
+            const capCard = document.getElementById('eceCompCapacitor');
+
+            const powerStatus = document.getElementById('ecePowerStatus');
+            const switchStatus = document.getElementById('eceSwitchStatus');
+            const resistorStatus = document.getElementById('eceResistorStatus');
+            const capStatus = document.getElementById('eceCapacitorStatus');
+            const capFill = document.getElementById('eceCapacitorFill');
+
+            const statusDot = document.getElementById('coreStatusDot');
+            const statusText = document.getElementById('coreStatusText');
+
+            // LOCKED CHECK: Step touched out of order
+            if (stepIndex > this.completedTasks + 1) {
+                this.showSubtleLockedMessage();
+                return;
+            }
+
+            // STEP 1 — DC SOURCE
+            if (stepIndex === 1) {
+                if (this.completedTasks === 0) {
+                    this.completedTasks = 1;
+                    this.energyLevel = 0.3;
+                    if (this.nodes[0]) this.nodes[0].active = true;
+
+                    if (powerCard) powerCard.classList.add('active');
+                    if (powerStatus) powerStatus.textContent = 'ON';
+
+                    if (switchCard) switchCard.classList.remove('locked');
+                    if (switchStatus) switchStatus.textContent = 'OPEN';
+
+                    if (statusDot) statusDot.classList.add('active');
+                    if (statusText) {
+                        statusText.textContent = 'DC SOURCE ACTIVATED';
+                        statusText.style.color = 'var(--orange-bright)';
+                    }
+
+                    DrakenCinematicAudioEngine.playTask1PowerOn();
+                    this.spawnPulses(6, 0.02);
+                }
+                return;
+            }
+
+            // STEP 2 — KNIFE SWITCH
+            if (stepIndex === 2) {
+                if (this.completedTasks === 1) {
+                    this.completedTasks = 2;
+                    this.energyLevel = 0.55;
+                    if (this.nodes[1]) this.nodes[1].active = true;
+
+                    if (switchCard) switchCard.classList.add('active');
+                    if (switchStatus) switchStatus.textContent = 'CLOSED';
+
+                    if (resistorCard) resistorCard.classList.remove('locked');
+                    if (resistorStatus) resistorStatus.textContent = 'INACTIVE';
+
+                    if (statusText) {
+                        statusText.textContent = 'KNIFE SWITCH CLOSED';
+                        statusText.style.color = 'var(--orange-bright)';
+                    }
+
+                    DrakenCinematicAudioEngine.playTask2KnifeSwitch();
+                    this.spawnPulses(10, 0.022);
+                }
+                return;
+            }
+
+            // STEP 3 — RESISTOR
+            if (stepIndex === 3) {
+                if (this.completedTasks === 2) {
+                    this.completedTasks = 3;
+                    this.energyLevel = 0.75;
+                    if (this.nodes[2]) this.nodes[2].active = true;
+
+                    if (resistorCard) resistorCard.classList.add('active');
+                    if (resistorStatus) resistorStatus.textContent = 'ACTIVE';
+
+                    if (capCard) capCard.classList.remove('locked');
+                    if (capStatus) capStatus.textContent = 'UNCHARGED';
+
+                    if (statusText) {
+                        statusText.textContent = 'RESISTOR ACTIVE';
+                        statusText.style.color = 'var(--orange-bright)';
+                    }
+
+                    DrakenCinematicAudioEngine.playTask3Resistor();
+                    this.spawnPulses(16, 0.028);
+                }
+                return;
+            }
+
+            // STEP 4 — CAPACITOR
+            if (stepIndex === 4) {
+                if (this.completedTasks === 3) {
+                    this.completedTasks = 4;
+                    if (this.nodes[3]) this.nodes[3].active = true;
+
+                    if (capCard) capCard.classList.add('active');
+                    if (capStatus) capStatus.textContent = 'CHARGING...';
+
+                    if (statusText) {
+                        statusText.textContent = 'CAPACITOR CHARGING...';
+                        statusText.style.color = '#ffd700';
+                    }
+
+                    // Progressive charging sound sweep (1.2s)
+                    DrakenCinematicAudioEngine.playCapacitorChargingSweep(1.2);
+
+                    // Smooth fill bar ramp 0% -> 100%
+                    let startTime = null;
+                    const animateFill = (timestamp) => {
+                        if (!startTime) startTime = timestamp;
+                        const elapsed = timestamp - startTime;
+                        const progress = Math.min(elapsed / 1200, 1.0);
+
+                        if (capFill) capFill.style.width = `${(progress * 100).toFixed(0)}%`;
+                        if (capStatus) capStatus.textContent = `${(progress * 100).toFixed(0)}% CHARGED`;
+                        this.energyLevel = 0.75 + progress * 0.2;
+
+                        if (progress < 1.0) {
+                            requestAnimationFrame(animateFill);
+                        } else {
+                            // FULL CHARGE REACHED -> AUTOMATIC FINALE ANIMATION!
+                            this.triggerAutomaticFinaleAnimation();
+                        }
+                    };
+                    requestAnimationFrame(animateFill);
+                }
+                return;
+            }
+        },
+
+        triggerAutomaticFinaleAnimation() {
+            this.active = true;
+
+            const powerCard = document.getElementById('eceCompPower');
+            const switchCard = document.getElementById('eceCompSwitch');
+            const resistorCard = document.getElementById('eceCompResistor');
+            const capCard = document.getElementById('eceCompCapacitor');
+
+            const powerStatus = document.getElementById('ecePowerStatus');
+            const switchStatus = document.getElementById('eceSwitchStatus');
+            const resistorStatus = document.getElementById('eceResistorStatus');
+            const capStatus = document.getElementById('eceCapacitorStatus');
+            const capFill = document.getElementById('eceCapacitorFill');
+
+            const statusDot = document.getElementById('coreStatusDot');
+            const statusText = document.getElementById('coreStatusText');
+
+            // SMOOTH REAL MOBILE HAPTIC SYNCHRONIZATION
+            if ("vibrate" in navigator) {
+                try {
+                    navigator.vibrate([40, 30, 80, 40, 150, 50, 300, 60, 450, 100, 200, 80, 500]);
+                } catch (e) { }
+            }
+
+            // 1. CAPACITOR FULL -> Energy Peak & ONE MAIN POWER RELEASE SOUND ("DURRRRRR")
+            this.nodes.forEach(n => n.active = true);
+            this.energyLevel = 1.0;
+            DrakenCinematicAudioEngine.playFinalPowerReleaseImpact();
+
+            if (statusText) {
+                statusText.textContent = 'DRAGON AWAKENED';
+                statusText.style.color = 'var(--gold-bright)';
+            }
+
+            // 2. Lightning & Circuit Pulses
+            setTimeout(() => {
+                this.spawnPulses(35, 0.045);
+                FullPageAtmosphereEngine.triggerLightning();
+            }, 450);
+
+            // 3. Shockwave Expansion
+            setTimeout(() => {
+                if (this.shockwaveEl) {
+                    this.shockwaveEl.classList.remove('trigger');
+                    void this.shockwaveEl.offsetWidth;
+                    this.shockwaveEl.classList.add('trigger');
+                }
+            }, 700);
+
+            // 4. Fire Eruption & Power Burst
+            setTimeout(() => {
+                if (this.wrapperEl) this.wrapperEl.classList.add('erupting');
+                this.spawnPulses(45, 0.055);
+            }, 950);
+
+            // 5. Sparks, Embers & Screen Shake
+            setTimeout(() => {
+                document.body.classList.add('screen-shake-effect');
+                setTimeout(() => document.body.classList.remove('screen-shake-effect'), 450);
+            }, 1200);
+
+            // 6. ~4-SECOND REALISTIC ORGANIC DRAGON ROAR & DEEP HAPTIC PULSE
+            setTimeout(() => {
+                DrakenCinematicAudioEngine.triggerEpicCinematicDragonRoar();
+                if ("vibrate" in navigator) {
+                    try {
+                        navigator.vibrate([150, 80, 400]);
+                    } catch (e) { }
+                }
+            }, 1600);
+
+            // 7. AFTER FINAL ANIMATION — EVERYTHING TURNS OFF COMPLETELY! (~6.0s)
+            setTimeout(() => {
+                this.active = false;
+                this.completedTasks = 0;
+                this.energyLevel = 0.0; // ALL electrical glow OFF!
+
+                // Turn off all nodes
+                this.nodes.forEach(n => n.active = false);
+
+                // Reset card UI states
+                if (powerCard) {
+                    powerCard.classList.remove('active', 'locked');
+                }
+                if (switchCard) {
+                    switchCard.classList.remove('active');
+                    switchCard.classList.add('locked');
+                }
+                if (resistorCard) {
+                    resistorCard.classList.remove('active');
+                    resistorCard.classList.add('locked');
+                }
+                if (capCard) {
+                    capCard.classList.remove('active');
+                    capCard.classList.add('locked');
+                }
+
+                if (powerStatus) powerStatus.textContent = 'OFF';
+                if (switchStatus) switchStatus.textContent = 'OPEN (LOCKED)';
+                if (resistorStatus) resistorStatus.textContent = 'INACTIVE (LOCKED)';
+                if (capStatus) capStatus.textContent = 'UNCHARGED (LOCKED)';
+                if (capFill) capFill.style.width = '0%';
+
+                if (this.wrapperEl) this.wrapperEl.classList.remove('erupting');
+                if (statusDot) statusDot.classList.remove('active');
+
+                // Stop vibration
+                if ('vibrate' in navigator) {
+                    try { navigator.vibrate(0); } catch (e) { }
+                }
+
+                // Core Status shows ONLY: DRAGON AWAKENED
+                if (statusText) {
+                    statusText.textContent = 'DRAGON AWAKENED';
+                    statusText.style.color = 'var(--gold-bright)';
+                }
+            }, 6000);
+        },
+
+        spawnPulses(count, speedBase) {
+            const cx = this.canvas.width / 2;
+            const cy = this.canvas.height / 2;
+            for (let i = 0; i < count; i++) {
+                const n = this.nodes[i % this.nodes.length];
                 this.pulses.push({
                     startX: n.x,
                     startY: n.y,
                     targetX: cx,
                     targetY: cy,
-                    progress: Math.random(),
-                    speed: Math.random() * 0.015 + 0.008,
-                    size: Math.random() * 3 + 1.8
+                    progress: 0,
+                    speed: Math.random() * speedBase + speedBase * 0.5,
+                    size: Math.random() * 4 + 2
                 });
             }
-        },
-
-        engageCircuit() {
-            if (this.active) return;
-            this.active = true;
-
-            const switchCard = document.getElementById('eceCompSwitch');
-            const switchStatus = document.getElementById('eceSwitchStatus');
-            const resistorCard = document.getElementById('eceCompResistor');
-            const resistorStatus = document.getElementById('eceResistorStatus');
-            const capCard = document.getElementById('eceCompCapacitor');
-            const capStatus = document.getElementById('eceCapacitorStatus');
-            const capFill = document.getElementById('eceCapacitorFill');
-            const statusDot = document.getElementById('coreStatusDot');
-            const statusText = document.getElementById('coreStatusText');
-            const btn = document.getElementById('btnEngageECECircuit');
-
-            if (statusDot) statusDot.classList.add('active');
-            if (statusText) {
-                statusText.textContent = 'CLOSING KNIFE SWITCH & INTENSIFYING ENERGY...';
-                statusText.style.color = '#ffaa00';
-            }
-            if (btn) btn.textContent = '⚡ ENERGIZING ECE CIRCUIT...';
-
-            // 1. Close Knife Switch & Intensify Energy
-            if (switchCard) switchCard.classList.add('active');
-            if (switchStatus) switchStatus.textContent = 'ENGAGED (MAX VOLTAGE)';
-
-            // 2. Power Resistor Load & Heat Circuit
-            setTimeout(() => {
-                if (resistorCard) resistorCard.classList.add('active');
-                if (resistorStatus) resistorStatus.textContent = 'RESISTOR HEATING & POWERING LOAD';
-            }, 300);
-
-            // 3. Charge Capacitor to 100% & Surge PCB Pulses
-            setTimeout(() => {
-                if (capCard) capCard.classList.add('active');
-                if (capStatus) capStatus.textContent = '100% CHARGED';
-                if (capFill) capFill.style.width = '100%';
-
-                for (let i = 0; i < 28; i++) {
-                    const n = this.nodes[i % 4];
-                    this.pulses.push({
-                        startX: n.x,
-                        startY: n.y,
-                        targetX: this.canvas.width / 2,
-                        targetY: this.canvas.height / 2,
-                        progress: 0,
-                        speed: Math.random() * 0.035 + 0.02,
-                        size: Math.random() * 4.5 + 2.5
-                    });
-                }
-            }, 650);
-
-            // 4. CINEMATIC FINAL ACTIVATION / FIERY ERUPTION PAYOFF
-            setTimeout(() => {
-                this.energyLevel = 1.0;
-                if (statusText) {
-                    statusText.textContent = '⚡ DRAGON CORE — POWER IGNITION (MAXIMUM ERUPTION!)';
-                    statusText.style.color = '#ffd700';
-                }
-
-                // Trigger Wrapper Burst Animation & Shockwave
-                if (this.wrapperEl) {
-                    this.wrapperEl.classList.add('erupting');
-                }
-                if (this.shockwaveEl) {
-                    this.shockwaveEl.classList.remove('trigger');
-                    void this.shockwaveEl.offsetWidth; // reflow
-                    this.shockwaveEl.classList.add('trigger');
-                }
-
-                // Trigger Full-Page Lightning Flash
-                FullPageAtmosphereEngine.triggerLightning();
-            }, 1200);
-
-            // 5. Smooth Reset to Powered / Charged Idle State (NOT DEAD!)
-            setTimeout(() => {
-                this.active = false;
-                this.energyLevel = 0.3; // Return to powered idle glow
-
-                if (this.wrapperEl) this.wrapperEl.classList.remove('erupting');
-                if (switchStatus) switchStatus.textContent = 'ACTIVE (STANDBY)';
-                if (resistorStatus) resistorStatus.textContent = 'READY LOAD (10 kΩ)';
-                if (capStatus) capStatus.textContent = '70% CHARGED';
-                if (capFill) capFill.style.width = '70%';
-
-                if (statusDot) statusDot.classList.add('active');
-                if (statusText) {
-                    statusText.textContent = 'DRAGON CORE — ALIVE & POWERED (STANDBY)';
-                    statusText.style.color = 'var(--gold-bright)';
-                }
-                if (btn) btn.textContent = '⚡ MAXIMUM POWER ACTIVATION';
-            }, 4200);
         },
 
         animate() {

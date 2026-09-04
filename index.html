@@ -199,34 +199,35 @@
             <div class="container">
                 <div class="ece-circuit-wrapper reveal" id="eceCircuitWrapper">
                     <div class="dragon-core-header">
-                        <span class="section-label">HARDWARE POWER CORE</span>
-                        <h2 class="section-title" style="font-size: 1.8rem; margin-top: 6px; color: var(--text-primary);">DRAGON CORE — Power Ignition</h2>
-                        <p class="dragon-core-tagline">ENGAGE THE REALISTIC ECE COMPONENTS TO TRIGGER THE DRAGON CORE ERUPTION</p>
+                        <div class="dragon-core-header-top">
+                            <span class="section-label">HARDWARE POWER CORE</span>
+                        </div>
+                        <h2 class="section-title" style="font-size: 1.8rem; margin-top: 4px; color: var(--text-primary);">DRAGON CORE — Power Ignition</h2>
                     </div>
 
-                    <!-- Component Interactive Status Cards (ALREADY POWERED INITIAL STATE) -->
+                    <!-- Component Interactive Cards (OFF INITIAL STATE) -->
                     <div class="ece-circuit-grid">
-                        <div class="ece-comp-card active" id="eceCompPower">
+                        <div class="ece-comp-card" id="eceCompPower">
                             <span class="ece-comp-icon">🔋</span>
-                            <div class="ece-comp-title">DC POWER SOURCE</div>
-                            <div class="ece-comp-status">24V ACTIVE</div>
+                            <div class="ece-comp-title">DC SOURCE</div>
+                            <div class="ece-comp-status" id="ecePowerStatus">OFF</div>
                         </div>
-                        <div class="ece-comp-card active" id="eceCompSwitch">
+                        <div class="ece-comp-card locked" id="eceCompSwitch">
                             <span class="ece-comp-icon">⚡</span>
                             <div class="ece-comp-title">KNIFE SWITCH</div>
-                            <div class="ece-comp-status" id="eceSwitchStatus">ACTIVE (STANDBY)</div>
+                            <div class="ece-comp-status" id="eceSwitchStatus">OPEN (LOCKED)</div>
                         </div>
-                        <div class="ece-comp-card active" id="eceCompResistor">
+                        <div class="ece-comp-card locked" id="eceCompResistor">
                             <span class="ece-comp-icon">🎛</span>
-                            <div class="ece-comp-title">10 kΩ RESISTOR</div>
-                            <div class="ece-comp-status" id="eceResistorStatus">READY LOAD (10 kΩ)</div>
+                            <div class="ece-comp-title">RESISTOR</div>
+                            <div class="ece-comp-status" id="eceResistorStatus">INACTIVE (LOCKED)</div>
                         </div>
-                        <div class="ece-comp-card active" id="eceCompCapacitor">
+                        <div class="ece-comp-card locked" id="eceCompCapacitor">
                             <span class="ece-comp-icon">💾</span>
-                            <div class="ece-comp-title">100 µF CAPACITOR</div>
-                            <div class="ece-comp-status" id="eceCapacitorStatus">70% CHARGED</div>
+                            <div class="ece-comp-title">CAPACITOR</div>
+                            <div class="ece-comp-status" id="eceCapacitorStatus">UNCHARGED (LOCKED)</div>
                             <div class="ece-progress-bar-container">
-                                <div class="ece-progress-bar-fill" id="eceCapacitorFill" style="width: 70%;"></div>
+                                <div class="ece-progress-bar-fill" id="eceCapacitorFill" style="width: 0%;"></div>
                             </div>
                         </div>
                     </div>
@@ -239,12 +240,9 @@
 
                     <div class="dragon-core-hud">
                         <div class="core-status-box">
-                            <span class="status-dot active" id="coreStatusDot"></span>
-                            <span>CORE STATUS: <strong id="coreStatusText" style="color: var(--gold-bright);">DRAGON CORE — ALIVE &amp; POWERED (STANDBY)</strong></span>
+                            <span class="status-dot" id="coreStatusDot"></span>
+                            <span>CORE STATUS: <strong id="coreStatusText" style="color: var(--text-tertiary);">POWERED DOWN</strong></span>
                         </div>
-                        <button type="button" class="btn-engage-ece-circuit" id="btnEngageECECircuit">
-                            ⚡ MAXIMUM POWER ACTIVATION
-                        </button>
                     </div>
                 </div>
             </div>

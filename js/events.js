@@ -44,17 +44,20 @@ const Events = {
         return `
             <article class="event-card event-theme-${event.id}" data-event-id="${event.id}" data-event-theme="${event.id}" tabindex="0" role="button"
                 aria-label="View details for ${event.name}">
-                <div class="event-card-header">
-                    <span class="event-card-index">${event.index ? event.index + ' //' : ''}</span>
-                    <span class="event-card-category">${event.category}</span>
+                <div class="event-card-bg-overlay"></div>
+                <div class="event-card-content">
+                    <div class="event-card-header">
+                        <span class="event-card-index">${event.index ? event.index + ' //' : ''}</span>
+                        <span class="event-card-category">${event.category}</span>
+                    </div>
+                    <h3 class="event-card-name">${event.name}</h3>
+                    <p class="event-card-tagline">${event.tagline}</p>
+                    <div class="event-theme-badge-wrapper">
+                        <span class="event-theme-badge">${badgeText}</span>
+                    </div>
+                    <p class="event-card-type">${event.type}</p>
+                    <span class="event-card-arrow" aria-hidden="true">→</span>
                 </div>
-                <h3 class="event-card-name">${event.name}</h3>
-                <p class="event-card-tagline">${event.tagline}</p>
-                <div class="event-theme-badge-wrapper">
-                    <span class="event-theme-badge">${badgeText}</span>
-                </div>
-                <p class="event-card-type">${event.type}</p>
-                <span class="event-card-arrow" aria-hidden="true">→</span>
             </article>
         `;
     },
