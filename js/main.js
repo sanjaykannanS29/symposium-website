@@ -1279,29 +1279,30 @@
             } catch (e) { }
         },
 
-        // 3. RESISTOR — Dedicated realistic current-flow sound through resistive load
+        // 3. RESISTOR — Much more audible, realistic electrical load activation sound
         playTask3Resistor() {
             this.ensureContext();
             if (!this.ctx) return;
             try {
                 const now = this.ctx.currentTime;
-                const dur = 0.38;
+                const dur = 0.35;
 
-                // 1. Current flow through resistive element (warm 180Hz -> 320Hz load surge)
+                // 1. Primary electrical current load surge (punchy, deep 160Hz -> 360Hz)
                 const flowOsc = this.ctx.createOscillator();
                 const flowGain = this.ctx.createGain();
                 const flowFilter = this.ctx.createBiquadFilter();
 
-                flowOsc.type = 'triangle';
-                flowOsc.frequency.setValueAtTime(180, now);
-                flowOsc.frequency.exponentialRampToValueAtTime(320, now + dur);
+                flowOsc.type = 'sawtooth';
+                flowOsc.frequency.setValueAtTime(160, now);
+                flowOsc.frequency.exponentialRampToValueAtTime(360, now + dur);
 
                 flowFilter.type = 'lowpass';
-                flowFilter.frequency.setValueAtTime(1200, now);
-                flowFilter.frequency.exponentialRampToValueAtTime(600, now + dur);
+                flowFilter.frequency.setValueAtTime(1800, now);
+                flowFilter.frequency.exponentialRampToValueAtTime(700, now + dur);
+                flowFilter.Q.setValueAtTime(2.5, now);
 
                 flowGain.gain.setValueAtTime(0.001, now);
-                flowGain.gain.linearRampToValueAtTime(0.48, now + 0.05);
+                flowGain.gain.linearRampToValueAtTime(0.70, now + 0.04);
                 flowGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
 
                 flowOsc.connect(flowFilter);
@@ -1310,28 +1311,28 @@
                 flowOsc.start(now);
                 flowOsc.stop(now + dur);
 
-                // 2. High-precision current load ionization sizzle (ceramic resistor current dissipation)
-                const loadOsc = this.ctx.createOscillator();
-                const loadGain = this.ctx.createGain();
-                const loadFilter = this.ctx.createBiquadFilter();
+                // 2. Secondary electrical load hum & current dissipation (sub-tone + bandpassed hiss)
+                const humOsc = this.ctx.createOscillator();
+                const humGain = this.ctx.createGain();
+                const humFilter = this.ctx.createBiquadFilter();
 
-                loadOsc.type = 'sawtooth';
-                loadOsc.frequency.setValueAtTime(420, now);
-                loadOsc.frequency.exponentialRampToValueAtTime(210, now + dur * 0.8);
+                humOsc.type = 'triangle';
+                humOsc.frequency.setValueAtTime(120, now);
+                humOsc.frequency.linearRampToValueAtTime(240, now + dur * 0.7);
 
-                loadFilter.type = 'bandpass';
-                loadFilter.frequency.setValueAtTime(750, now);
-                loadFilter.Q.setValueAtTime(3.0, now);
+                humFilter.type = 'bandpass';
+                humFilter.frequency.setValueAtTime(900, now);
+                humFilter.Q.setValueAtTime(2.0, now);
 
-                loadGain.gain.setValueAtTime(0.001, now);
-                loadGain.gain.linearRampToValueAtTime(0.35, now + 0.03);
-                loadGain.gain.exponentialRampToValueAtTime(0.001, now + dur * 0.8);
+                humGain.gain.setValueAtTime(0.001, now);
+                humGain.gain.linearRampToValueAtTime(0.45, now + 0.03);
+                humGain.gain.exponentialRampToValueAtTime(0.001, now + dur * 0.7);
 
-                loadOsc.connect(loadFilter);
-                loadFilter.connect(loadGain);
-                loadGain.connect(this.ctx.destination);
-                loadOsc.start(now);
-                loadOsc.stop(now + dur * 0.8);
+                humOsc.connect(humFilter);
+                humFilter.connect(humGain);
+                humGain.connect(this.ctx.destination);
+                humOsc.start(now);
+                humOsc.stop(now + dur * 0.7);
             } catch (e) { }
         },
 
@@ -1366,13 +1367,13 @@
             } catch (e) { }
         },
 
-        // 5. MAIN FINAL POWER RELEASE — DEEP POWERFUL "DURRRRRR" ELECTRICAL IMPACT SOUND
+        // 5. MAIN FINAL POWER RELEASE — TIGHT, SHORTER, DEEP POWERFUL "DURRRRRR" ELECTRICAL IMPACT SOUND (~1.0s)
         playFinalPowerReleaseImpact() {
             this.ensureContext();
             if (!this.ctx) return;
             try {
                 const now = this.ctx.currentTime;
-                const dur = 1.8;
+                const dur = 1.0; // Tightened from 1.8s to 1.0s for precise animation fit
 
                 // Heavy Sawtooth Low-End Energy Release ("DURRRRRR")
                 const powerOsc = this.ctx.createOscillator();
@@ -1380,15 +1381,15 @@
                 const powerFilter = this.ctx.createBiquadFilter();
 
                 powerOsc.type = 'sawtooth';
-                powerOsc.frequency.setValueAtTime(180, now);
-                powerOsc.frequency.exponentialRampToValueAtTime(42, now + dur);
+                powerOsc.frequency.setValueAtTime(200, now);
+                powerOsc.frequency.exponentialRampToValueAtTime(38, now + dur);
 
                 powerFilter.type = 'lowpass';
-                powerFilter.frequency.setValueAtTime(650, now);
-                powerFilter.frequency.exponentialRampToValueAtTime(120, now + dur);
+                powerFilter.frequency.setValueAtTime(750, now);
+                powerFilter.frequency.exponentialRampToValueAtTime(110, now + dur);
 
                 powerGain.gain.setValueAtTime(0.001, now);
-                powerGain.gain.linearRampToValueAtTime(0.75, now + 0.1);
+                powerGain.gain.linearRampToValueAtTime(0.85, now + 0.08);
                 powerGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
 
                 powerOsc.connect(powerFilter);
@@ -1402,11 +1403,11 @@
                 const subGain = this.ctx.createGain();
 
                 subOsc.type = 'sine';
-                subOsc.frequency.setValueAtTime(65, now);
-                subOsc.frequency.exponentialRampToValueAtTime(25, now + dur);
+                subOsc.frequency.setValueAtTime(75, now);
+                subOsc.frequency.exponentialRampToValueAtTime(20, now + dur);
 
                 subGain.gain.setValueAtTime(0.001, now);
-                subGain.gain.linearRampToValueAtTime(0.85, now + 0.08);
+                subGain.gain.linearRampToValueAtTime(0.90, now + 0.06);
                 subGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
 
                 subOsc.connect(subGain);
@@ -1417,13 +1418,13 @@
             } catch (e) { }
         },
 
-        // 6. ~4-SECOND REALISTIC ORGANIC DRAGON ROAR
+        // 6. REALISTIC ORGANIC DRAGON ROAR (~2.4s TIGHTENED DURATION)
         triggerEpicCinematicDragonRoar() {
             this.ensureContext();
             if (!this.ctx) return;
             try {
                 const now = this.ctx.currentTime;
-                const dur = 4.0;
+                const dur = 2.4; // Tightened from 4.0s to 2.4s to fit naturally inside animation
 
                 // 1. Organic Formant Throat Resonance + Pitch Sweep
                 const roarOsc = this.ctx.createOscillator();
@@ -1431,19 +1432,19 @@
                 const roarFilter = this.ctx.createBiquadFilter();
 
                 roarOsc.type = 'sawtooth';
-                roarOsc.frequency.setValueAtTime(95, now);
-                roarOsc.frequency.exponentialRampToValueAtTime(240, now + 1.2);
-                roarOsc.frequency.exponentialRampToValueAtTime(65, now + dur);
+                roarOsc.frequency.setValueAtTime(110, now);
+                roarOsc.frequency.exponentialRampToValueAtTime(260, now + 0.8);
+                roarOsc.frequency.exponentialRampToValueAtTime(60, now + dur);
 
                 roarFilter.type = 'lowpass';
-                roarFilter.frequency.setValueAtTime(350, now);
-                roarFilter.frequency.linearRampToValueAtTime(1100, now + 1.2);
-                roarFilter.frequency.exponentialRampToValueAtTime(150, now + dur);
+                roarFilter.frequency.setValueAtTime(400, now);
+                roarFilter.frequency.linearRampToValueAtTime(1200, now + 0.8);
+                roarFilter.frequency.exponentialRampToValueAtTime(160, now + dur);
                 roarFilter.Q.setValueAtTime(3.5, now);
 
                 roarGain.gain.setValueAtTime(0.001, now);
-                roarGain.gain.linearRampToValueAtTime(0.8, now + 0.8);
-                roarGain.gain.setValueAtTime(0.8, now + 2.2);
+                roarGain.gain.linearRampToValueAtTime(0.85, now + 0.5);
+                roarGain.gain.setValueAtTime(0.85, now + 1.4);
                 roarGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
 
                 roarOsc.connect(roarFilter);
@@ -1456,11 +1457,11 @@
                 const subOsc = this.ctx.createOscillator();
                 const subGain = this.ctx.createGain();
                 subOsc.type = 'sine';
-                subOsc.frequency.setValueAtTime(70, now);
-                subOsc.frequency.exponentialRampToValueAtTime(30, now + dur);
+                subOsc.frequency.setValueAtTime(75, now);
+                subOsc.frequency.exponentialRampToValueAtTime(28, now + dur);
 
                 subGain.gain.setValueAtTime(0.001, now);
-                subGain.gain.linearRampToValueAtTime(0.7, now + 0.6);
+                subGain.gain.linearRampToValueAtTime(0.75, now + 0.4);
                 subGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
 
                 subOsc.connect(subGain);
@@ -1480,14 +1481,14 @@
 
                 const noiseFilter = this.ctx.createBiquadFilter();
                 noiseFilter.type = 'bandpass';
-                noiseFilter.frequency.setValueAtTime(400, now);
-                noiseFilter.frequency.linearRampToValueAtTime(1400, now + 1.2);
-                noiseFilter.frequency.exponentialRampToValueAtTime(250, now + dur);
+                noiseFilter.frequency.setValueAtTime(450, now);
+                noiseFilter.frequency.linearRampToValueAtTime(1500, now + 0.8);
+                noiseFilter.frequency.exponentialRampToValueAtTime(220, now + dur);
                 noiseFilter.Q.setValueAtTime(1.8, now);
 
                 const noiseGain = this.ctx.createGain();
                 noiseGain.gain.setValueAtTime(0.001, now);
-                noiseGain.gain.linearRampToValueAtTime(0.35, now + 0.8);
+                noiseGain.gain.linearRampToValueAtTime(0.38, now + 0.5);
                 noiseGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
 
                 noiseSrc.connect(noiseFilter);
@@ -1752,14 +1753,14 @@
             const statusDot = document.getElementById('coreStatusDot');
             const statusText = document.getElementById('coreStatusText');
 
-            // SMOOTH REAL MOBILE HAPTIC SYNCHRONIZATION
+            // SHORT, TIGHT REAL MOBILE HAPTIC SYNCHRONIZATION (Build-up + Main Impact)
             if ("vibrate" in navigator) {
                 try {
-                    navigator.vibrate([40, 30, 80, 40, 150, 50, 300, 60, 450, 100, 200, 80, 500]);
+                    navigator.vibrate([40, 30, 220]); // Short build-up + brief strong impact
                 } catch (e) { }
             }
 
-            // 1. CAPACITOR FULL -> Energy Peak & ONE MAIN POWER RELEASE SOUND ("DURRRRRR")
+            // 1. CAPACITOR FULL -> Energy Peak & ONE MAIN POWER RELEASE SOUND ("DURRRRRR", ~1.0s)
             this.nodes.forEach(n => n.active = true);
             this.energyLevel = 1.0;
             DrakenCinematicAudioEngine.playFinalPowerReleaseImpact();
@@ -1790,21 +1791,21 @@
                 this.spawnPulses(45, 0.055);
             }, 950);
 
-            // 5. Sparks, Embers & Screen Shake
-            setTimeout(() => {
-                document.body.classList.add('screen-shake-effect');
-                setTimeout(() => document.body.classList.remove('screen-shake-effect'), 450);
-            }, 1200);
-
-            // 6. ~4-SECOND REALISTIC ORGANIC DRAGON ROAR & DEEP HAPTIC PULSE
+            // 5. REALISTIC SHORT DRAGON ROAR & BRIEF GROWL HAPTIC (~2.4s)
             setTimeout(() => {
                 DrakenCinematicAudioEngine.triggerEpicCinematicDragonRoar();
                 if ("vibrate" in navigator) {
                     try {
-                        navigator.vibrate([150, 80, 400]);
+                        navigator.vibrate([80]);
                     } catch (e) { }
                 }
-            }, 1600);
+            }, 1000);
+
+            // 6. Sparks, Embers & Screen Shake
+            setTimeout(() => {
+                document.body.classList.add('screen-shake-effect');
+                setTimeout(() => document.body.classList.remove('screen-shake-effect'), 450);
+            }, 1200);
 
             // 7. AFTER FINAL ANIMATION — EVERYTHING TURNS OFF COMPLETELY! (~6.0s)
             setTimeout(() => {
