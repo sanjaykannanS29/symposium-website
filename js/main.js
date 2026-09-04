@@ -703,7 +703,7 @@
                     traceIndex: Math.floor(Math.random() * this.pcbTraces.length),
                     progress: Math.random(),
                     speed: Math.random() * 0.0025 + 0.0012,
-                    color: Math.random() < 0.75 ? '#ff6600' : '#00ffea',
+                    color: Math.random() < 0.7 ? '#ff6600' : '#ffaa00',
                     size: Math.random() * 2.5 + 1.8
                 });
             }
@@ -794,7 +794,7 @@
                 this.ctx.fill();
             });
 
-            // ── LAYER 2: PRIMARY VISUAL SUBJECT — PROMINENT 3D DRAGON ───────────
+            // ── LAYER 2: PRIMARY VISUAL SUBJECT — FIERY ORANGE & AMBER 3D DRAGON ───────────
             if (!this.isMobile) {
                 const dragonX = w * 0.78;
                 const dragonY = h * 0.32;
@@ -802,9 +802,9 @@
 
                 this.ctx.save();
 
-                // 2A. Dragon Body & Wing Silhouette Fill
-                this.ctx.fillStyle = 'rgba(12, 12, 18, 0.88)';
-                this.ctx.strokeStyle = 'rgba(255, 95, 0, 0.45)';
+                // 2A. Dragon Silhouette Fill & Fiery Orange Rim Highlights
+                this.ctx.fillStyle = 'rgba(20, 10, 6, 0.92)';
+                this.ctx.strokeStyle = 'rgba(255, 102, 0, 0.75)';
                 this.ctx.lineWidth = 2;
 
                 // Head & Snout Silhouette Path
@@ -824,8 +824,8 @@
                 this.ctx.fill();
                 this.ctx.stroke();
 
-                // 2B. Dragon Scale Plates & Metallic Rim Lighting Highlights
-                this.ctx.strokeStyle = 'rgba(255, 125, 20, 0.55)';
+                // 2B. Dragon Scale Plates & Amber Gold Rim Lighting
+                this.ctx.strokeStyle = 'rgba(255, 170, 0, 0.85)';
                 this.ctx.lineWidth = 1.6;
                 this.ctx.beginPath();
                 // Scale contour arcs along throat & neck
@@ -838,30 +838,43 @@
                 this.ctx.lineTo(dragonX - 118, dragonY - 130);
                 this.ctx.stroke();
 
-                // 2C. PROMINENT GLOWING DRAGON EYE (Main Focal Point)
+                // Occasional High-Voltage Orange/Gold Lightning Arc across Wing Ridge
+                if (Math.random() < 0.08) {
+                    this.ctx.strokeStyle = '#ffffff';
+                    this.ctx.shadowColor = '#ffaa00';
+                    this.ctx.shadowBlur = 20;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(dragonX - 120, dragonY - 140);
+                    this.ctx.lineTo(dragonX - 30, dragonY - 70);
+                    this.ctx.lineTo(dragonX + 120, dragonY - 120);
+                    this.ctx.lineTo(dragonX + 220, dragonY + 40);
+                    this.ctx.stroke();
+                }
+
+                // 2C. GLOWING AMBER GOLD DRAGON EYE
                 const eyeX = dragonX - 150;
                 const eyeY = dragonY - 45;
 
-                // Eye Fire Radial Illumination Glow
+                // Eye Fiery Amber Radial Energy Glow
                 const eyeGlowGrad = this.ctx.createRadialGradient(eyeX, eyeY, 2, eyeX, eyeY, 80);
-                eyeGlowGrad.addColorStop(0, `rgba(255, 80, 0, ${0.4 + eyePulse * 0.3})`);
-                eyeGlowGrad.addColorStop(0.4, `rgba(220, 40, 0, ${0.2 + eyePulse * 0.15})`);
-                eyeGlowGrad.addColorStop(1, 'rgba(5, 5, 7, 0)');
+                eyeGlowGrad.addColorStop(0, `rgba(255, 170, 0, ${0.6 + eyePulse * 0.4})`);
+                eyeGlowGrad.addColorStop(0.4, `rgba(255, 85, 0, ${0.3 + eyePulse * 0.2})`);
+                eyeGlowGrad.addColorStop(1, 'rgba(6, 8, 12, 0)');
                 this.ctx.fillStyle = eyeGlowGrad;
                 this.ctx.beginPath();
                 this.ctx.arc(eyeX, eyeY, 80, 0, Math.PI * 2);
                 this.ctx.fill();
 
                 // Eye Socket Slit & Iris
-                this.ctx.fillStyle = '#ffaa00';
-                this.ctx.shadowColor = '#ff5500';
-                this.ctx.shadowBlur = 18;
+                this.ctx.fillStyle = '#ffd700';
+                this.ctx.shadowColor = '#ffaa00';
+                this.ctx.shadowBlur = 20;
                 this.ctx.beginPath();
                 this.ctx.ellipse(eyeX, eyeY, 14, 8, -Math.PI / 6, 0, Math.PI * 2);
                 this.ctx.fill();
 
                 // Vertical Slit Pupil
-                this.ctx.fillStyle = '#050507';
+                this.ctx.fillStyle = '#06080c';
                 this.ctx.shadowBlur = 0;
                 this.ctx.beginPath();
                 this.ctx.ellipse(eyeX, eyeY, 3, 9, -Math.PI / 6, 0, Math.PI * 2);
@@ -874,7 +887,7 @@
             this.ctx.save();
             this.ctx.lineWidth = 1;
             this.pcbTraces.forEach(trace => {
-                this.ctx.strokeStyle = 'rgba(255, 85, 0, 0.06)';
+                this.ctx.strokeStyle = 'rgba(255, 102, 0, 0.12)';
                 this.ctx.beginPath();
                 this.ctx.moveTo(trace.startX, 0);
 
@@ -884,8 +897,8 @@
                     this.ctx.lineTo(pt.x, pt.y);
                     lastX = pt.x;
 
-                    // Small PCB Node Pad
-                    this.ctx.fillStyle = 'rgba(255, 85, 0, 0.1)';
+                    // PCB Node Pad
+                    this.ctx.fillStyle = 'rgba(255, 170, 0, 0.25)';
                     this.ctx.fillRect(pt.x - 2, pt.y - 2, 4, 4);
                 });
                 this.ctx.lineTo(lastX, h);
@@ -931,14 +944,14 @@
                     this.ctx.rotate(chip.rotation);
 
                     // Microchip Body
-                    this.ctx.fillStyle = 'rgba(18, 18, 26, 0.35)';
-                    this.ctx.strokeStyle = 'rgba(255, 85, 0, 0.22)';
+                    this.ctx.fillStyle = 'rgba(20, 14, 8, 0.5)';
+                    this.ctx.strokeStyle = 'rgba(255, 102, 0, 0.35)';
                     this.ctx.lineWidth = 1.2;
                     this.ctx.fillRect(-chip.size / 2, -chip.size / 2, chip.size, chip.size);
                     this.ctx.strokeRect(-chip.size / 2, -chip.size / 2, chip.size, chip.size);
 
                     // Microchip Pin Arrays
-                    this.ctx.fillStyle = 'rgba(255, 120, 0, 0.35)';
+                    this.ctx.fillStyle = 'rgba(255, 170, 0, 0.5)';
                     const pinCountPerSide = Math.floor(chip.pins / 4);
                     const pinSpacing = chip.size / (pinCountPerSide + 1);
 
@@ -956,39 +969,7 @@
                 });
             }
 
-            // ── LAYER 6: Controlled Fire Plumes (Reduced 65% for 15% Fire Lighting) ─────
-            this.risingFlames.forEach(f => {
-                f.y += f.vy;
-                f.x += Math.sin(timeSec * 2 + f.waveOffset) * 0.7 + f.vx;
-                f.life -= f.decay;
-
-                if (f.life <= 0 || f.y < -50) {
-                    f.x = Math.random() * w;
-                    f.y = h + Math.random() * 30;
-                    f.radius = Math.random() * 24 + 10;
-                    f.alpha = Math.random() * 0.28 + 0.12;
-                    f.life = 1.0;
-                }
-
-                const currentRadius = f.radius * f.life;
-                const currentAlpha = f.alpha * f.life;
-
-                const flameGrad = this.ctx.createRadialGradient(
-                    f.x, f.y, 2,
-                    f.x, f.y, Math.max(currentRadius, 4)
-                );
-                flameGrad.addColorStop(0, `rgba(255, 190, 40, ${currentAlpha * 0.85})`);
-                flameGrad.addColorStop(0.4, `rgba(255, 85, 0, ${currentAlpha * 0.6})`);
-                flameGrad.addColorStop(0.8, `rgba(180, 25, 0, ${currentAlpha * 0.25})`);
-                flameGrad.addColorStop(1, 'rgba(5, 5, 7, 0)');
-
-                this.ctx.fillStyle = flameGrad;
-                this.ctx.beginPath();
-                this.ctx.arc(f.x, f.y, Math.max(currentRadius, 4), 0, Math.PI * 2);
-                this.ctx.fill();
-            });
-
-            // ── LAYER 7: Floating Embers & Sparks (5% Composition) ──────────────
+            // ── LAYER 6: Electric Spark & Fiery Energy Particles ────────────────
             this.particles.forEach(p => {
                 p.x += p.vx + Math.sin(timeSec + p.pulse) * 0.2;
                 p.y += p.vy;
@@ -1004,11 +985,11 @@
                 this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
 
                 if (p.isSpark) {
-                    this.ctx.fillStyle = `rgba(255, 140, 40, ${currentAlpha})`;
-                    this.ctx.shadowColor = 'rgba(255, 85, 0, 0.8)';
-                    this.ctx.shadowBlur = 6;
+                    this.ctx.fillStyle = `rgba(255, 215, 0, ${currentAlpha})`;
+                    this.ctx.shadowColor = 'rgba(255, 170, 0, 0.9)';
+                    this.ctx.shadowBlur = 8;
                 } else {
-                    this.ctx.fillStyle = `rgba(255, 85, 0, ${currentAlpha})`;
+                    this.ctx.fillStyle = `rgba(255, 102, 0, ${currentAlpha})`;
                     this.ctx.shadowBlur = 0;
                 }
                 this.ctx.fill();
@@ -1018,14 +999,538 @@
         }
     };
 
+    /* ═══════════════════════════════════════════════════
+       INTERACTIVE OSCILLOSCOPE WAVEFORM ENGINE
+       ═══════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════
+       THE DRAGON CORE — ADVANCED ECE POWER SYSTEM ENGINE
+       ═══════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════
+       FULL-PAGE ATMOSPHERIC FIRE, SMOKE & LIGHTNING ENGINE
+       ═══════════════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════════════
+       FULL-PAGE ATMOSPHERIC FIRE, SMOKE & LIGHTNING ENGINE
+       ═══════════════════════════════════════════════════ */
+    const FullPageAtmosphereEngine = {
+        canvas: null,
+        ctx: null,
+        particles: [],
+        smokeClouds: [],
+        lightningFlash: 0,
+        animFrame: null,
+        isMobile: false,
+
+        init() {
+            this.canvas = document.getElementById('fullPageAtmosphereCanvas');
+            if (!this.canvas) return;
+
+            this.ctx = this.canvas.getContext('2d');
+            this.isMobile = window.innerWidth < 768;
+
+            this.resize();
+            window.addEventListener('resize', () => {
+                this.isMobile = window.innerWidth < 768;
+                this.resize();
+                this.initElements();
+            });
+
+            this.initElements();
+            this.animate();
+        },
+
+        resize() {
+            if (!this.canvas) return;
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+        },
+
+        initElements() {
+            const w = this.canvas.width;
+            const h = this.canvas.height;
+
+            // Ambient Embers & Glowing Ash Particles Across Full Page
+            this.particles = [];
+            const count = this.isMobile ? 30 : 65;
+            for (let i = 0; i < count; i++) {
+                this.particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    radius: Math.random() * 2.5 + 0.7,
+                    vx: (Math.random() - 0.5) * 0.45,
+                    vy: -Math.random() * 0.9 - 0.35,
+                    alpha: Math.random() * 0.6 + 0.15,
+                    isSpark: Math.random() < 0.3
+                });
+            }
+
+            // Atmospheric Smoke & Fire Glow Clouds
+            this.smokeClouds = [];
+            const cloudCount = this.isMobile ? 10 : 20;
+            for (let i = 0; i < cloudCount; i++) {
+                this.smokeClouds.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    radius: Math.random() * 200 + 120,
+                    vx: (Math.random() - 0.5) * 0.18,
+                    vy: (Math.random() - 0.5) * 0.09,
+                    alpha: Math.random() * 0.07 + 0.02,
+                    isFlame: Math.random() < 0.3
+                });
+            }
+        },
+
+        triggerLightning() {
+            this.lightningFlash = 1.0;
+        },
+
+        animate() {
+            if (!this.ctx || !this.canvas) return;
+            const w = this.canvas.width;
+            const h = this.canvas.height;
+
+            this.ctx.clearRect(0, 0, w, h);
+
+            // 1. Intermittent Fiery Lightning Flash (Orange-Gold White Light)
+            if (this.lightningFlash > 0.01) {
+                this.ctx.fillStyle = `rgba(255, 220, 160, ${this.lightningFlash * 0.32})`;
+                this.ctx.fillRect(0, 0, w, h);
+                this.lightningFlash *= 0.88;
+            }
+
+            // 2. Random Intermittent Thunder Lightning
+            if (Math.random() < 0.0018) {
+                this.triggerLightning();
+            }
+
+            // 3. Volumetric Atmospheric Smoke & Low Flame Glow
+            this.smokeClouds.forEach(cloud => {
+                cloud.x += cloud.vx;
+                cloud.y += cloud.vy;
+
+                if (cloud.x < -cloud.radius) cloud.x = w + cloud.radius;
+                if (cloud.x > w + cloud.radius) cloud.x = -cloud.radius;
+                if (cloud.y < -cloud.radius) cloud.y = h + cloud.radius;
+                if (cloud.y > h + cloud.radius) cloud.y = -cloud.radius;
+
+                const grad = this.ctx.createRadialGradient(cloud.x, cloud.y, 10, cloud.x, cloud.y, cloud.radius);
+                if (cloud.isFlame) {
+                    grad.addColorStop(0, `rgba(60, 22, 10, ${cloud.alpha * 1.3})`);
+                    grad.addColorStop(0.5, `rgba(30, 12, 6, ${cloud.alpha * 0.5})`);
+                } else {
+                    grad.addColorStop(0, `rgba(28, 14, 10, ${cloud.alpha})`);
+                    grad.addColorStop(0.5, `rgba(14, 8, 6, ${cloud.alpha * 0.4})`);
+                }
+                grad.addColorStop(1, 'rgba(4, 4, 4, 0)');
+
+                this.ctx.fillStyle = grad;
+                this.ctx.beginPath();
+                this.ctx.arc(cloud.x, cloud.y, cloud.radius, 0, Math.PI * 2);
+                this.ctx.fill();
+            });
+
+            // 4. Floating Embers, Sparks & Ash
+            this.particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.y < 0) {
+                    p.y = h + 10;
+                    p.x = Math.random() * w;
+                }
+
+                this.ctx.globalAlpha = p.alpha;
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+
+                if (p.isSpark) {
+                    this.ctx.fillStyle = '#ffd700';
+                    this.ctx.shadowColor = '#ffaa00';
+                    this.ctx.shadowBlur = 8;
+                } else {
+                    this.ctx.fillStyle = '#ff6600';
+                    this.ctx.shadowBlur = 0;
+                }
+                this.ctx.fill();
+            });
+            this.ctx.globalAlpha = 1.0;
+
+            requestAnimationFrame(() => this.animate());
+        }
+    };
+
+    /* ═══════════════════════════════════════════════════
+       ECE CIRCUIT MINI-GAME & FIERY ERUPTION ENGINE
+       ═══════════════════════════════════════════════════ */
+    const ECECircuitCoreEngine = {
+        canvas: null,
+        ctx: null,
+        active: false,
+        energyLevel: 0.3, // Initial ALREADY-POWERED State
+        nodes: [],
+        pulses: [],
+        shockwaveEl: null,
+        wrapperEl: null,
+
+        init() {
+            this.canvas = document.getElementById('dragonCoreCanvas');
+            if (!this.canvas) return;
+
+            this.ctx = this.canvas.getContext('2d');
+            this.shockwaveEl = document.getElementById('dragonCoreShockwave');
+            this.wrapperEl = document.getElementById('eceCircuitWrapper');
+
+            this.resize();
+            window.addEventListener('resize', () => {
+                this.resize();
+                this.initNodes();
+            });
+
+            this.initNodes();
+
+            // Interactive Click / Touch Handlers
+            const btnEngage = document.getElementById('btnEngageECECircuit');
+            if (btnEngage) {
+                btnEngage.addEventListener('click', () => this.engageCircuit());
+            }
+
+            const cards = document.querySelectorAll('.ece-comp-card');
+            cards.forEach(card => {
+                card.addEventListener('click', () => this.engageCircuit());
+            });
+
+            this.animate();
+        },
+
+        resize() {
+            if (!this.canvas || !this.canvas.parentElement) return;
+            this.canvas.width = this.canvas.parentElement.clientWidth;
+            this.canvas.height = this.canvas.parentElement.clientHeight;
+        },
+
+        initNodes() {
+            const w = this.canvas.width;
+            const h = this.canvas.height;
+            const cx = w / 2;
+            const cy = h / 2;
+            const radius = Math.min(w, h) * 0.32;
+
+            // ALREADY POWERED INITIAL STATE: All nodes active
+            this.nodes = [
+                { id: 'NODE-01', x: cx - radius, y: cy - radius * 0.5, radius: 18, active: true, label: 'PWR 24V' },
+                { id: 'NODE-02', x: cx + radius, y: cy - radius * 0.5, radius: 18, active: true, label: 'SWITCH' },
+                { id: 'NODE-03', x: cx - radius, y: cy + radius * 0.5, radius: 18, active: true, label: '10kΩ LOAD' },
+                { id: 'NODE-04', x: cx + radius, y: cy + radius * 0.5, radius: 18, active: true, label: '100µF CAP' }
+            ];
+
+            this.pulses = [];
+            for (let i = 0; i < 10; i++) {
+                const n = this.nodes[i % 4];
+                this.pulses.push({
+                    startX: n.x,
+                    startY: n.y,
+                    targetX: cx,
+                    targetY: cy,
+                    progress: Math.random(),
+                    speed: Math.random() * 0.015 + 0.008,
+                    size: Math.random() * 3 + 1.8
+                });
+            }
+        },
+
+        engageCircuit() {
+            if (this.active) return;
+            this.active = true;
+
+            const switchCard = document.getElementById('eceCompSwitch');
+            const switchStatus = document.getElementById('eceSwitchStatus');
+            const resistorCard = document.getElementById('eceCompResistor');
+            const resistorStatus = document.getElementById('eceResistorStatus');
+            const capCard = document.getElementById('eceCompCapacitor');
+            const capStatus = document.getElementById('eceCapacitorStatus');
+            const capFill = document.getElementById('eceCapacitorFill');
+            const statusDot = document.getElementById('coreStatusDot');
+            const statusText = document.getElementById('coreStatusText');
+            const btn = document.getElementById('btnEngageECECircuit');
+
+            if (statusDot) statusDot.classList.add('active');
+            if (statusText) {
+                statusText.textContent = 'CLOSING KNIFE SWITCH & INTENSIFYING ENERGY...';
+                statusText.style.color = '#ffaa00';
+            }
+            if (btn) btn.textContent = '⚡ ENERGIZING ECE CIRCUIT...';
+
+            // 1. Close Knife Switch & Intensify Energy
+            if (switchCard) switchCard.classList.add('active');
+            if (switchStatus) switchStatus.textContent = 'ENGAGED (MAX VOLTAGE)';
+
+            // 2. Power Resistor Load & Heat Circuit
+            setTimeout(() => {
+                if (resistorCard) resistorCard.classList.add('active');
+                if (resistorStatus) resistorStatus.textContent = 'RESISTOR HEATING & POWERING LOAD';
+            }, 300);
+
+            // 3. Charge Capacitor to 100% & Surge PCB Pulses
+            setTimeout(() => {
+                if (capCard) capCard.classList.add('active');
+                if (capStatus) capStatus.textContent = '100% CHARGED';
+                if (capFill) capFill.style.width = '100%';
+
+                for (let i = 0; i < 28; i++) {
+                    const n = this.nodes[i % 4];
+                    this.pulses.push({
+                        startX: n.x,
+                        startY: n.y,
+                        targetX: this.canvas.width / 2,
+                        targetY: this.canvas.height / 2,
+                        progress: 0,
+                        speed: Math.random() * 0.035 + 0.02,
+                        size: Math.random() * 4.5 + 2.5
+                    });
+                }
+            }, 650);
+
+            // 4. CINEMATIC FINAL ACTIVATION / FIERY ERUPTION PAYOFF
+            setTimeout(() => {
+                this.energyLevel = 1.0;
+                if (statusText) {
+                    statusText.textContent = '⚡ DRAGON CORE — POWER IGNITION (MAXIMUM ERUPTION!)';
+                    statusText.style.color = '#ffd700';
+                }
+
+                // Trigger Wrapper Burst Animation & Shockwave
+                if (this.wrapperEl) {
+                    this.wrapperEl.classList.add('erupting');
+                }
+                if (this.shockwaveEl) {
+                    this.shockwaveEl.classList.remove('trigger');
+                    void this.shockwaveEl.offsetWidth; // reflow
+                    this.shockwaveEl.classList.add('trigger');
+                }
+
+                // Trigger Full-Page Lightning Flash
+                FullPageAtmosphereEngine.triggerLightning();
+            }, 1200);
+
+            // 5. Smooth Reset to Powered / Charged Idle State (NOT DEAD!)
+            setTimeout(() => {
+                this.active = false;
+                this.energyLevel = 0.3; // Return to powered idle glow
+
+                if (this.wrapperEl) this.wrapperEl.classList.remove('erupting');
+                if (switchStatus) switchStatus.textContent = 'ACTIVE (STANDBY)';
+                if (resistorStatus) resistorStatus.textContent = 'READY LOAD (10 kΩ)';
+                if (capStatus) capStatus.textContent = '70% CHARGED';
+                if (capFill) capFill.style.width = '70%';
+
+                if (statusDot) statusDot.classList.add('active');
+                if (statusText) {
+                    statusText.textContent = 'DRAGON CORE — ALIVE & POWERED (STANDBY)';
+                    statusText.style.color = 'var(--gold-bright)';
+                }
+                if (btn) btn.textContent = '⚡ MAXIMUM POWER ACTIVATION';
+            }, 4200);
+        },
+
+        animate() {
+            if (!this.ctx || !this.canvas) return;
+            const w = this.canvas.width;
+            const h = this.canvas.height;
+            const cx = w / 2;
+            const cy = h / 2;
+            const timeSec = performance.now() * 0.001;
+
+            this.ctx.clearRect(0, 0, w, h);
+
+            // 1. Draw PCB Ground Grid Lines
+            this.ctx.strokeStyle = 'rgba(255, 102, 0, 0.08)';
+            this.ctx.lineWidth = 1;
+            for (let x = 0; x < w; x += 40) {
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, 0);
+                this.ctx.lineTo(x, h);
+                this.ctx.stroke();
+            }
+            for (let y = 0; y < h; y += 40) {
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, y);
+                this.ctx.lineTo(w, y);
+                this.ctx.stroke();
+            }
+
+            // 2. Draw PCB Copper Traces to Center Core
+            this.nodes.forEach(node => {
+                this.ctx.strokeStyle = node.active ? 'rgba(255, 170, 0, 0.85)' : 'rgba(255, 102, 0, 0.25)';
+                this.ctx.lineWidth = node.active ? 3.5 : 1.5;
+                this.ctx.beginPath();
+                this.ctx.moveTo(node.x, node.y);
+                this.ctx.lineTo(node.x, cy);
+                this.ctx.lineTo(cx, cy);
+                this.ctx.stroke();
+            });
+
+            // 3. Draw Traveling Signal Pulses
+            for (let i = this.pulses.length - 1; i >= 0; i--) {
+                const p = this.pulses[i];
+                p.progress += p.speed;
+                const currentX = p.startX + (p.targetX - p.startX) * p.progress;
+                const currentY = p.startY + (p.targetY - p.startY) * p.progress;
+
+                this.ctx.fillStyle = '#ffd700';
+                this.ctx.shadowColor = '#ff6600';
+                this.ctx.shadowBlur = 12;
+                this.ctx.beginPath();
+                this.ctx.arc(currentX, currentY, p.size, 0, Math.PI * 2);
+                this.ctx.fill();
+
+                if (p.progress >= 1) {
+                    this.pulses.splice(i, 1);
+                }
+            }
+
+            // Continuous signal pulse replenishment for ALREADY-POWERED circuit state
+            const targetPulseCount = this.active ? 28 : 8;
+            while (this.pulses.length < targetPulseCount && this.nodes.length > 0) {
+                const n = this.nodes[Math.floor(Math.random() * this.nodes.length)];
+                this.pulses.push({
+                    startX: n.x,
+                    startY: n.y,
+                    targetX: cx,
+                    targetY: cy,
+                    progress: 0,
+                    speed: Math.random() * 0.015 + 0.008,
+                    size: Math.random() * 3 + 1.8
+                });
+            }
+
+            // 4. Draw Power Nodes
+            this.nodes.forEach(node => {
+                this.ctx.save();
+                this.ctx.fillStyle = node.active ? '#ffaa00' : 'rgba(30, 16, 8, 0.9)';
+                this.ctx.strokeStyle = node.active ? '#ffd700' : 'rgba(255, 102, 0, 0.5)';
+                this.ctx.lineWidth = 2;
+                this.ctx.shadowColor = '#ffaa00';
+                this.ctx.shadowBlur = node.active ? 20 : 0;
+
+                this.ctx.beginPath();
+                this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+
+                // Node Label Text
+                this.ctx.font = '10px Space Grotesk';
+                this.ctx.fillStyle = '#ffffff';
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText(node.label, node.x, node.y + 3);
+                this.ctx.restore();
+            });
+
+            // 5. DRAW CENTRAL DRAGON CORE & FIERY ERUPTION BURST
+            this.ctx.save();
+            const coreRadius = 45 + Math.sin(timeSec * 3) * 3 + this.energyLevel * 30;
+            const coreGlow = this.ctx.createRadialGradient(cx, cy, 5, cx, cy, coreRadius * 2.2);
+
+            if (this.energyLevel > 0.5) {
+                coreGlow.addColorStop(0, 'rgba(255, 215, 0, 0.98)');
+                coreGlow.addColorStop(0.4, 'rgba(255, 102, 0, 0.75)');
+                coreGlow.addColorStop(1, 'rgba(6, 8, 12, 0)');
+            } else {
+                coreGlow.addColorStop(0, 'rgba(255, 102, 0, 0.6)');
+                coreGlow.addColorStop(0.5, 'rgba(150, 50, 0, 0.25)');
+                coreGlow.addColorStop(1, 'rgba(6, 8, 12, 0)');
+            }
+
+            this.ctx.fillStyle = coreGlow;
+            this.ctx.beginPath();
+            this.ctx.arc(cx, cy, coreRadius * 2.2, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Core Solid Center
+            this.ctx.fillStyle = '#ffd700';
+            this.ctx.shadowColor = '#ff6600';
+            this.ctx.shadowBlur = 25;
+            this.ctx.beginPath();
+            this.ctx.arc(cx, cy, coreRadius * 0.45, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            // Core Outer Ring
+            this.ctx.strokeStyle = '#ff6600';
+            this.ctx.lineWidth = 3;
+            this.ctx.beginPath();
+            this.ctx.arc(cx, cy, coreRadius, 0, Math.PI * 2);
+            this.ctx.stroke();
+
+            this.ctx.restore();
+
+            requestAnimationFrame(() => this.animate());
+        }
+    };
+
+    /* ═══════════════════════════════════════════════════
+       FAQ SPARK / RIPPLE ENGINE
+       ═══════════════════════════════════════════════════ */
+    const FAQSparkEngine = {
+        init() {
+            document.addEventListener('click', (e) => {
+                const item = e.target.closest('.faq-item');
+                if (item) {
+                    item.style.boxShadow = '0 0 30px rgba(255, 170, 0, 0.4)';
+                    setTimeout(() => {
+                        item.style.boxShadow = '';
+                    }, 600);
+                }
+            });
+        }
+    };
+
+    /* ═══════════════════════════════════════════════════
+       INTERACTIVE GENERAL RULES ACCORDION ENGINE
+       ═══════════════════════════════════════════════════ */
+    const RulesAccordionEngine = {
+        init() {
+            const accordion = document.getElementById('rulesAccordion');
+            if (!accordion) return;
+
+            accordion.addEventListener('click', (e) => {
+                const header = e.target.closest('.rules-category-header');
+                if (!header) return;
+
+                const card = header.closest('.rules-category-card');
+                if (!card) return;
+
+                const isAlreadyActive = card.classList.contains('active');
+
+                // Collapse all categories for a clean single-open accordion feel
+                const allCards = accordion.querySelectorAll('.rules-category-card');
+                allCards.forEach(c => {
+                    c.classList.remove('active');
+                    const btn = c.querySelector('.rules-category-header');
+                    const arrow = c.querySelector('.rules-category-arrow');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                    if (arrow) arrow.textContent = '＋';
+                });
+
+                // Open selected category if it was not already active
+                if (!isAlreadyActive) {
+                    card.classList.add('active');
+                    header.setAttribute('aria-expanded', 'true');
+                    const arrow = card.querySelector('.rules-category-arrow');
+                    if (arrow) arrow.textContent = '−';
+                }
+            });
+        }
+    };
+
     function init() {
         OpeningEngine.init();
         DragonECE3DEngine.init();
+        FullPageAtmosphereEngine.init();
+        ECECircuitCoreEngine.init();
+        RulesAccordionEngine.init();
+        FAQSparkEngine.init();
         Nav.init();
         if (window.Countdown) window.Countdown.init();
         if (window.Events) window.Events.init();
         if (window.Registration) window.Registration.init();
-        renderRules();
         renderFAQ();
         renderContacts();
         initLocation();

@@ -83,6 +83,7 @@
 
     <!-- Persistent 3D Dragon Fire & Atmospheric Background Canvas -->
     <canvas class="cinematic-dragon-canvas" id="cinematicDragonCanvas"></canvas>
+    <canvas id="fullPageAtmosphereCanvas"></canvas>
 
     <!-- ═══════════════════════════════════════════════
          MAIN WEBSITE CONTENT
@@ -193,19 +194,167 @@
         </div>
 
 
-        <!-- 3. RULES SECTION (Separate Section) -->
+        <!-- ECE CIRCUIT MINI-GAME & FIERY ERUPTION PAYOFF SECTION -->
+        <section class="ece-circuit-section" id="eceCircuitSection">
+            <div class="container">
+                <div class="ece-circuit-wrapper reveal" id="eceCircuitWrapper">
+                    <div class="dragon-core-header">
+                        <span class="section-label">HARDWARE POWER CORE</span>
+                        <h2 class="section-title" style="font-size: 1.8rem; margin-top: 6px; color: var(--text-primary);">DRAGON CORE — Power Ignition</h2>
+                        <p class="dragon-core-tagline">ENGAGE THE REALISTIC ECE COMPONENTS TO TRIGGER THE DRAGON CORE ERUPTION</p>
+                    </div>
+
+                    <!-- Component Interactive Status Cards (ALREADY POWERED INITIAL STATE) -->
+                    <div class="ece-circuit-grid">
+                        <div class="ece-comp-card active" id="eceCompPower">
+                            <span class="ece-comp-icon">🔋</span>
+                            <div class="ece-comp-title">DC POWER SOURCE</div>
+                            <div class="ece-comp-status">24V ACTIVE</div>
+                        </div>
+                        <div class="ece-comp-card active" id="eceCompSwitch">
+                            <span class="ece-comp-icon">⚡</span>
+                            <div class="ece-comp-title">KNIFE SWITCH</div>
+                            <div class="ece-comp-status" id="eceSwitchStatus">ACTIVE (STANDBY)</div>
+                        </div>
+                        <div class="ece-comp-card active" id="eceCompResistor">
+                            <span class="ece-comp-icon">🎛</span>
+                            <div class="ece-comp-title">10 kΩ RESISTOR</div>
+                            <div class="ece-comp-status" id="eceResistorStatus">READY LOAD (10 kΩ)</div>
+                        </div>
+                        <div class="ece-comp-card active" id="eceCompCapacitor">
+                            <span class="ece-comp-icon">💾</span>
+                            <div class="ece-comp-title">100 µF CAPACITOR</div>
+                            <div class="ece-comp-status" id="eceCapacitorStatus">70% CHARGED</div>
+                            <div class="ece-progress-bar-container">
+                                <div class="ece-progress-bar-fill" id="eceCapacitorFill" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive PCB Trace Canvas -->
+                    <div class="dragon-core-canvas-container">
+                        <canvas id="dragonCoreCanvas"></canvas>
+                        <div class="section-shockwave" id="dragonCoreShockwave"></div>
+                    </div>
+
+                    <div class="dragon-core-hud">
+                        <div class="core-status-box">
+                            <span class="status-dot active" id="coreStatusDot"></span>
+                            <span>CORE STATUS: <strong id="coreStatusText" style="color: var(--gold-bright);">DRAGON CORE — ALIVE &amp; POWERED (STANDBY)</strong></span>
+                        </div>
+                        <button type="button" class="btn-engage-ece-circuit" id="btnEngageECECircuit">
+                            ⚡ MAXIMUM POWER ACTIVATION
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 3. RULES SECTION (INTERACTIVE GENERAL RULES ONLY) -->
         <section class="section rules-section" id="rules">
             <div class="container">
                 <div class="section-header reveal">
-                    <span class="section-label">GENERAL GUIDELINES</span>
-                    <h2 class="section-title">RULES AND REGULATIONS</h2>
-                    <p class="section-subtitle">Official code of conduct for all participating teams in DRAKEN'26.</p>
+                    <span class="section-label">GUIDELINES &amp; COMPLIANCE</span>
+                    <h2 class="section-title">GENERAL RULES</h2>
+                    <p class="section-subtitle">Official symposium general rules and compliance criteria for all participants.</p>
                     <div class="section-divider" aria-hidden="true"></div>
                 </div>
 
+                <!-- Interactive Accordion General Rules -->
                 <div class="rules-container reveal">
-                    <div class="rules-list" id="rulesList">
-                        <!-- Populated by js/main.js -->
+                    <div class="rules-accordion" id="rulesAccordion">
+
+                        <!-- Category 1: Registration Rules -->
+                        <div class="rules-category-card active">
+                            <button type="button" class="rules-category-header" aria-expanded="true">
+                                <div class="rules-category-title">
+                                    <span class="rules-category-icon">📋</span>
+                                    <span>Registration Rules</span>
+                                </div>
+                                <span class="rules-category-arrow">−</span>
+                            </button>
+                            <div class="rules-category-body">
+                                <ul class="rules-category-list">
+                                    <li>Online registration is mandatory for all participating teams prior to the closing deadline (18 September 2026).</li>
+                                    <li>Registration for DRAKEN'26 is completely free; no registration or entry fees are required.</li>
+                                    <li>Official registration IDs generated upon form submission must be presented at the venue on event day.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Category 2: Participation Rules -->
+                        <div class="rules-category-card">
+                            <button type="button" class="rules-category-header" aria-expanded="false">
+                                <div class="rules-category-title">
+                                    <span class="rules-category-icon">👥</span>
+                                    <span>Participation Rules</span>
+                                </div>
+                                <span class="rules-category-arrow">＋</span>
+                            </button>
+                            <div class="rules-category-body">
+                                <ul class="rules-category-list">
+                                    <li>Each team must consist of exactly 2 registered members from any recognized engineering institution.</li>
+                                    <li>Both team members must be present during event proceedings and active round participation.</li>
+                                    <li>Participants must carry their valid College Identity Cards for verification.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Category 3: Time & Discipline -->
+                        <div class="rules-category-card">
+                            <button type="button" class="rules-category-header" aria-expanded="false">
+                                <div class="rules-category-title">
+                                    <span class="rules-category-icon">⏱️</span>
+                                    <span>Time &amp; Discipline</span>
+                                </div>
+                                <span class="rules-category-arrow">＋</span>
+                            </button>
+                            <div class="rules-category-body">
+                                <ul class="rules-category-list">
+                                    <li>Teams should report to the designated venue 15–30 minutes before their scheduled event slot.</li>
+                                    <li>Late arrivals or unexcused delays may result in forfeiture of presentation slots.</li>
+                                    <li>Adherence to allotted event durations (presentation time, demo time, mini-game time) is strictly enforced.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Category 4: Judging & Decision -->
+                        <div class="rules-category-card">
+                            <button type="button" class="rules-category-header" aria-expanded="false">
+                                <div class="rules-category-title">
+                                    <span class="rules-category-icon">⚖️</span>
+                                    <span>Judging &amp; Decision</span>
+                                </div>
+                                <span class="rules-category-arrow">＋</span>
+                            </button>
+                            <div class="rules-category-body">
+                                <ul class="rules-category-list">
+                                    <li>All events will be judged based on predefined technical and creative evaluation metrics.</li>
+                                    <li>Decisions made by the panel of judges and event coordinators are final and binding.</li>
+                                    <li>No appeals or arguments regarding evaluation scoring will be entertained.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Category 5: Originality & Conduct -->
+                        <div class="rules-category-card">
+                            <button type="button" class="rules-category-header" aria-expanded="false">
+                                <div class="rules-category-title">
+                                    <span class="rules-category-icon">🛡️</span>
+                                    <span>Originality &amp; Conduct</span>
+                                </div>
+                                <span class="rules-category-arrow">＋</span>
+                            </button>
+                            <div class="rules-category-body">
+                                <ul class="rules-category-list">
+                                    <li>All papers, projects, ideas, and media submitted must be original work created by the team.</li>
+                                    <li>Plagiarism, misconduct, or disruptive behavior will cause immediate disqualification.</li>
+                                    <li>Participants must maintain professional decorum, respect college property, and preserve discipline throughout the symposium.</li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

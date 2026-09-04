@@ -32,12 +32,12 @@ const Events = {
 
     createCard(event) {
         const themeBadges = {
-            'unveil': '👁 Holographic Research Mist',
-            'fuse': '⚡ Colliding Energy Streams',
-            'manifest': '🎛 3D PCB Hardware Wafer',
-            'cinora': '🎬 Anamorphic Lens Flare',
-            'gameverse': '🎮 Speed Pulse Trails',
-            'aamec-got-talent': '🔥 Stage Spotlight & Embers'
+            'unveil': '📄 Research & Paper Presentation',
+            'fuse': '⚡ Colliding Ideas & Innovation',
+            'manifest': '🎛️ Hardware & Project Expo',
+            'cinora': '🎬 Short Film & Lens Challenge',
+            'gameverse': '🎮 Rapid Mini-Games & Conquest',
+            'aamec-got-talent': '🎙️ Entertainment & Stage Spotlight'
         };
         const badgeText = themeBadges[event.id] || '🐉 Dragon ECE Core';
 

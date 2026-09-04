@@ -151,14 +151,17 @@
         font-size: 0.82rem;
     }
 
-    /* Events */
-    .events-grid {
+    /* Events & Rules */
+    .events-grid,
+    .rules-events-grid,
+    .general-rules-list {
         grid-template-columns: 1fr;
         gap: 20px;
     }
 
-    .event-card {
-        padding: 28px 24px;
+    .event-card,
+    .event-rules-card {
+        padding: 24px 20px;
     }
 
     /* Section Header */
