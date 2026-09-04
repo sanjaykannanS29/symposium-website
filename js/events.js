@@ -31,8 +31,18 @@ const Events = {
     },
 
     createCard(event) {
+        const themeBadges = {
+            'unveil': '👁 Holographic Research Mist',
+            'fuse': '⚡ Colliding Energy Streams',
+            'manifest': '🎛 3D PCB Hardware Wafer',
+            'cinora': '🎬 Anamorphic Lens Flare',
+            'gameverse': '🎮 Speed Pulse Trails',
+            'aamec-got-talent': '🔥 Stage Spotlight & Embers'
+        };
+        const badgeText = themeBadges[event.id] || '🐉 Dragon ECE Core';
+
         return `
-            <article class="event-card" data-event-id="${event.id}" tabindex="0" role="button"
+            <article class="event-card event-theme-${event.id}" data-event-id="${event.id}" data-event-theme="${event.id}" tabindex="0" role="button"
                 aria-label="View details for ${event.name}">
                 <div class="event-card-header">
                     <span class="event-card-index">${event.index ? event.index + ' //' : ''}</span>
@@ -40,6 +50,9 @@ const Events = {
                 </div>
                 <h3 class="event-card-name">${event.name}</h3>
                 <p class="event-card-tagline">${event.tagline}</p>
+                <div class="event-theme-badge-wrapper">
+                    <span class="event-theme-badge">${badgeText}</span>
+                </div>
                 <p class="event-card-type">${event.type}</p>
                 <span class="event-card-arrow" aria-hidden="true">→</span>
             </article>

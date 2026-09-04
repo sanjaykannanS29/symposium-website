@@ -19,10 +19,16 @@
         smokeClouds: [],
         animFrame: null,
         startTime: null,
-        duration: 4800, // 4.8s smooth visual transition
+        duration: 5200, // 5.2s 4-phase dragon awakening intro
         completed: false,
 
         init() {
+            // Guard: Play intro ONCE on initial site load only
+            if (sessionStorage.getItem('draken26_intro_played') === 'true') {
+                this.finish(true);
+                return;
+            }
+
             this.initCanvas();
             this.startTime = performance.now();
             this.animate(performance.now());
@@ -84,44 +90,44 @@
 
             this.ctx.clearRect(0, 0, w, h);
 
-            /* ── VISUAL TIMELINE SEQUENCE ─────────────────────────────
-               0.0s – 1.2s : Darkness, subtle mist & embers
-               1.2s – 2.6s : Ambient light swell & particle drift
-               2.6s – 3.8s : DRAKEN'26 revealed with glowing depth
-               3.8s – 4.8s : Seamless continuous dissolve into homepage hero
+            /* ── CLEAN ELEGANT CINEMATIC INTRO TRANSITION ─────────────────────
+               0.0s – 1.0s : Darkness & subtle drifting mist
+               1.0s – 2.6s : Ambient firelight swell & ember particle drift
+               2.6s – 3.6s : DRAKEN'26 revealed with glowing depth
+               3.6s – 4.5s : Smooth continuous dissolve into homepage hero
                ────────────────────────────────────────────────────────── */
 
             let bgAlpha = 1;
             let glowIntensity = 0;
             let titleOpacity = 0;
 
-            if (elapsed < 1200) {
-                bgAlpha = 1;
-                glowIntensity = 0;
+            if (elapsed < 1000) {
+                bgAlpha = 0.98;
+                glowIntensity = 0.1;
                 titleOpacity = 0;
             } else if (elapsed < 2600) {
-                const p = (elapsed - 1200) / 1400;
-                bgAlpha = 1;
-                glowIntensity = p * 0.65;
-                titleOpacity = p * 0.4;
-            } else if (elapsed < 3800) {
-                const p = (elapsed - 2600) / 1200;
-                bgAlpha = 1;
-                glowIntensity = 0.65 + Math.sin(p * Math.PI) * 0.35;
-                titleOpacity = 1;
-            } else if (elapsed < 4800) {
-                const p = (elapsed - 3800) / 1000;
-                bgAlpha = 1 - p;
-                glowIntensity = 1.0 * (1 - p);
-                titleOpacity = 1 - p;
+                const p = (elapsed - 1000) / 1600;
+                bgAlpha = 0.95;
+                glowIntensity = p * 0.7;
+                titleOpacity = p * 0.5;
+            } else if (elapsed < 3600) {
+                const p = (elapsed - 2600) / 1000;
+                bgAlpha = 0.92;
+                glowIntensity = 0.7 + Math.sin(p * Math.PI) * 0.3;
+                titleOpacity = 1.0;
+            } else if (elapsed < 4500) {
+                const p = (elapsed - 3600) / 900;
+                bgAlpha = 1.0 - p;
+                glowIntensity = 1.0 * (1.0 - p);
+                titleOpacity = 1.0 - p;
 
-                // Awaken hero content for seamless continuous handoff
                 const heroContent = document.getElementById('heroContent');
                 if (heroContent && !heroContent.classList.contains('awakened')) {
                     heroContent.classList.add('awakened');
                 }
             } else {
                 bgAlpha = 0;
+                titleOpacity = 0;
             }
 
             // 1. Draw Darkness Base
@@ -149,7 +155,7 @@
                 this.ctx.fill();
             });
 
-            // 3. Render Center Ambient Orange Light Glow
+            // 3. Render Center Volumetric Fire & Energy Light Glow
             if (glowIntensity > 0) {
                 const glowGrad = this.ctx.createRadialGradient(
                     w / 2, h / 2, 20,
@@ -179,38 +185,56 @@
                 this.ctx.fill();
             });
 
-            // 5. Title Reveal: DRAKEN'26 ONLY (No subtitles, no dates, no images)
+            // 5. Official Reference Poster Typography Title Reveal: DRAKEN'26 ONLY
             if (titleOpacity > 0 && bgAlpha > 0.02) {
                 this.ctx.save();
-                this.ctx.translate(w / 2, h / 2 - 40);
+                this.ctx.translate(w / 2, h / 2);
 
-                const fontSize = Math.min(w * 0.115, 98);
-                this.ctx.font = `800 ${fontSize}px "Space Grotesk", sans-serif`;
+                const fontSize = Math.min(w * 0.115, 96);
+                this.ctx.font = `900 ${fontSize}px "Cinzel Decorative", "Space Grotesk", serif`;
                 this.ctx.textAlign = 'center';
                 this.ctx.textBaseline = 'middle';
 
-                this.ctx.shadowColor = 'rgba(255, 85, 0, 0.95)';
-                this.ctx.shadowBlur = 50;
+                // Metallic Gold Gradient Fill
+                const goldGrad = this.ctx.createLinearGradient(0, -fontSize * 0.5, 0, fontSize * 0.5);
+                goldGrad.addColorStop(0, `rgba(255, 248, 214, ${titleOpacity * bgAlpha})`);
+                goldGrad.addColorStop(0.3, `rgba(255, 215, 0, ${titleOpacity * bgAlpha})`);
+                goldGrad.addColorStop(0.65, `rgba(255, 136, 0, ${titleOpacity * bgAlpha})`);
+                goldGrad.addColorStop(0.9, `rgba(153, 51, 0, ${titleOpacity * bgAlpha})`);
+                goldGrad.addColorStop(1, `rgba(255, 224, 102, ${titleOpacity * bgAlpha})`);
 
-                this.ctx.fillStyle = `rgba(255, 255, 255, ${titleOpacity * bgAlpha})`;
+                // 3D Dark Extrusion Depth Shadows
+                this.ctx.shadowColor = `rgba(0, 0, 0, ${0.9 * titleOpacity * bgAlpha})`;
+                this.ctx.shadowBlur = 12;
+                this.ctx.fillStyle = `rgba(20, 10, 5, ${titleOpacity * bgAlpha})`;
+                for (let s = 6; s > 0; s--) {
+                    this.ctx.fillText("DRAKEN'26", s, s);
+                }
+
+                // Outer Fire & Gold Illumination Glow
+                this.ctx.shadowColor = `rgba(255, 136, 0, ${0.85 * titleOpacity * bgAlpha})`;
+                this.ctx.shadowBlur = 36;
+                this.ctx.fillStyle = goldGrad;
                 this.ctx.fillText("DRAKEN'26", 0, 0);
 
                 this.ctx.restore();
             }
 
-            // Finish transition at 4.8s
-            if (elapsed >= 4800 && !this.completed) {
+            // Finish transition at 4.5s
+            if (elapsed >= 4500 && !this.completed) {
                 this.completed = true;
-                this.finish();
+                this.finish(false);
                 return;
             }
 
-            if (elapsed < 4800) {
+            if (elapsed < 4500) {
                 this.animFrame = requestAnimationFrame((n) => this.animate(n));
             }
         },
 
-        finish() {
+        finish(instant = false) {
+            sessionStorage.setItem('draken26_intro_played', 'true');
+
             if (this.canvas) {
                 this.canvas.classList.add('faded');
                 this.canvas.style.display = 'none';
@@ -340,14 +364,92 @@
     function renderRules() {
         const container = document.getElementById('rulesList');
         const config = window.CONFIG || (typeof CONFIG !== 'undefined' ? CONFIG : null);
-        if (!container || !config || !config.RULES) return;
+        if (!container || !config) return;
 
-        container.innerHTML = config.RULES.map((rule) => `
-            <div class="rules-item">
-                <span class="rules-icon">✓</span>
-                <p class="rules-text">${rule}</p>
+        const categories = config.RULE_CATEGORIES || [
+            {
+                category: 'General Rules',
+                icon: '📜',
+                items: [
+                    'Registration is mandatory for all participants.',
+                    'Participants must maintain discipline and decorum throughout the event.'
+                ]
+            },
+            {
+                category: 'Event Rules',
+                icon: '⚡',
+                items: [
+                    'Each team can participate according to event-specific team size and event rules.',
+                    'Team size and event-specific rules must be strictly followed.'
+                ]
+            },
+            {
+                category: 'Registration Guidelines',
+                icon: '📝',
+                items: [
+                    'Certificates will be provided only to registered participants.'
+                ]
+            },
+            {
+                category: 'Participation Guidelines',
+                icon: '⏰',
+                items: [
+                    'Participants should report 15–30 minutes before their scheduled event.',
+                    'Latecomers may not be permitted.'
+                ]
+            },
+            {
+                category: 'Judging / Decision',
+                icon: '⚖️',
+                items: [
+                    'Judges\' and event coordinators\' decisions are final and binding.'
+                ]
+            },
+            {
+                category: 'Important Restrictions',
+                icon: '🚫',
+                items: [
+                    'Malpractice, plagiarism, or misconduct may result in immediate disqualification.',
+                    'The organizing committee may change the schedule, rules, or venue if necessary.'
+                ]
+            }
+        ];
+
+        container.innerHTML = categories.map((cat, i) => `
+            <div class="rules-category-card" id="rule-cat-${i}">
+                <button class="rules-category-header" type="button" aria-expanded="false" aria-controls="rule-cat-body-${i}" id="rule-cat-btn-${i}">
+                    <div class="rules-category-title">
+                        <span class="rules-category-icon">${cat.icon}</span>
+                        <span>${cat.category}</span>
+                    </div>
+                    <span class="rules-category-arrow" aria-hidden="true">+</span>
+                </button>
+                <div class="rules-category-body" id="rule-cat-body-${i}" role="region" aria-labelledby="rule-cat-btn-${i}">
+                    <ul class="rules-category-list">
+                        ${cat.items.map(item => `<li><span class="rule-bullet">✦</span> ${item}</li>`).join('')}
+                    </ul>
+                </div>
             </div>
         `).join('');
+
+        container.addEventListener('click', (e) => {
+            const btn = e.target.closest('.rules-category-header');
+            if (!btn) return;
+
+            const card = btn.closest('.rules-category-card');
+            if (!card) return;
+
+            const isActive = card.classList.contains('active');
+            container.querySelectorAll('.rules-category-card.active').forEach(active => {
+                active.classList.remove('active');
+                active.querySelector('.rules-category-header')?.setAttribute('aria-expanded', 'false');
+            });
+
+            if (!isActive) {
+                card.classList.add('active');
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        });
     }
 
     function renderFAQ() {

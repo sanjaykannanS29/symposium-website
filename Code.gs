@@ -282,7 +282,7 @@ function sendConfirmationEmails(data, registrationId, isAamec) {
       </p>
 
       <p style="font-size: 0.85em; color: #555;">
-        * For UNVEIL (Paper Presentation), please send your presentation abstract to <a href="mailto:drakenece26@gmail.com">drakenece26@gmail.com</a> at least 1 week prior to the event.
+        * For UNVEIL (Paper Presentation), please send your presentation abstract to <a href="mailto:drakenece2026@gmail.com">drakenece2026@gmail.com</a> at least 1 week prior to the event.
       </p>
 
       <p style="margin-top: 30px; font-size: 0.8em; color: #888;">
