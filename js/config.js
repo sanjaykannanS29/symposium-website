@@ -287,11 +287,11 @@ const CONFIG = {
         hod: { title: 'Head of Department (ECE)', name: 'Dr. R. Rajaganapathi' },
         facultyCoordinators: [
             { name: 'Dr. V. Rajakani, AP/ECE' },
-            { name: 'Dr. G. Murugesan, ASP/ECE' }
+            { name: 'Dr. G. Murugesan, AP/ECE' }
         ],
         studentCoordinators: [
             { name: 'R.S. Aswin Saranraj' },
-            { name: 'S. Sajid Ahamed' },
+            { name: 'S. Sajith Ahamed' },
             { name: 'I. Divya' },
             { name: 'A. Roopa' }
         ]
