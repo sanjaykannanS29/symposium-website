@@ -291,7 +291,7 @@ const CONFIG = {
         ],
         studentCoordinators: [
             { name: 'R.S. Aswin Saranraj' },
-            { name: 'S. Sajith Ahamed' },
+            { name: 'S. Sajid Ahamed' },
             { name: 'I. Divya' },
             { name: 'A. Roopa' }
         ]
