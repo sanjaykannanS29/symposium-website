@@ -256,38 +256,71 @@ function doPost(e) {
 }
 
 function sendConfirmationEmails(data, registrationId, isAamec) {
-  const foodInfo = isAamec
-    ? "AAMEC students are not included in the provided food arrangements."
-    : "Food and refreshment will be provided at the campus for external participants.";
+  const foodInfoText = "Food arrangements are available for inter-college participants. AAMEC students are requested to make their own food arrangements.";
+
+  const techEventStr = String(data.technicalEvent || "").toUpperCase();
+  const isUnveil = techEventStr.indexOf("UNVEIL") !== -1 || techEventStr.indexOf("PAPER PRESENTATION") !== -1;
+
+  let unveilNoticeHtml = "";
+  if (isUnveil) {
+    unveilNoticeHtml = `
+      <div style="background: #fff8e6; border: 1px solid #ffe58f; border-left: 4px solid #c9a84c; padding: 16px; margin: 20px 0; border-radius: 4px;">
+        <h3 style="color: #b78103; margin-top: 0; margin-bottom: 10px; font-size: 1.05em; border-bottom: 1px dashed #ffe58f; padding-bottom: 6px;">Paper Presentation – Important Notice</h3>
+        <p style="margin: 0; font-size: 0.92em; color: #333; line-height: 1.5;">
+          If you have registered for Paper Presentation, please submit your abstract on or before <strong>18 September 2026</strong> through the official submission method provided by the organizers.
+        </p>
+      </div>
+    `;
+  }
 
   const bodyHtml = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; color: #111; line-height: 1.6;">
-      <h2 style="color: #c9a84c; border-bottom: 2px solid #c9a84c; padding-bottom: 8px;">DRAKEN'26 Registration Confirmation</h2>
+      <!-- 1. Registration Confirmation Header -->
+      <h2 style="color: #c9a84c; border-bottom: 2px solid #c9a84c; padding-bottom: 8px; margin-bottom: 16px;">DRAKEN'26 Registration Confirmation</h2>
       <p>Dear <strong>${data.teamName}</strong>,</p>
       <p>Your team registration for <strong>DRAKEN'26 — National Level Technical Symposium</strong> has been confirmed!</p>
       
+      <!-- 2. Team / Participant Details -->
       <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
         <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Registration ID:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee; color: #c9a84c;"><strong>${registrationId}</strong></td></tr>
         <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Team Name:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${data.teamName}</td></tr>
-        <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Technical Event:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${data.technicalEvent}</td></tr>
-        <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Non-Technical Event:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${data.nonTechnicalEvent}</td></tr>
         <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Member 1:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${data.member1.name} (${data.member1.regNo})</td></tr>
         <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Member 2:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${data.member2.name} (${data.member2.regNo})</td></tr>
-        <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Date:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">26 September 2026</td></tr>
+        <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Symposium Date:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">26 September 2026</td></tr>
         <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Venue:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">Anjalai Ammal Mahalingam Engineering College, Kovilvenni</td></tr>
       </table>
 
-      <p style="background: #f9f9f9; padding: 12px; border-left: 3px solid #c9a84c; font-size: 0.9em;">
-        <strong>Food Information:</strong> ${foodInfo}
+      <!-- 3. Your Registered Events -->
+      <div style="background: #f9f9f9; padding: 14px 16px; border: 1px solid #eee; border-left: 4px solid #c9a84c; margin: 20px 0; border-radius: 4px;">
+        <h3 style="color: #c9a84c; margin-top: 0; margin-bottom: 8px; font-size: 1.05em;">Your Registered Events</h3>
+        <ul style="margin: 0; padding-left: 20px; font-size: 0.95em; color: #333; line-height: 1.6;">
+          <li><strong>Technical Event:</strong> ${data.technicalEvent}</li>
+          <li><strong>Non-Technical Event:</strong> ${data.nonTechnicalEvent}</li>
+        </ul>
+      </div>
+
+      <!-- 4. Paper Presentation Notice (ONLY if UNVEIL is selected) -->
+      ${unveilNoticeHtml}
+
+      <!-- 5. Food Information -->
+      <div style="background: #f4f6f8; padding: 14px 16px; border: 1px solid #e1e4e8; border-left: 4px solid #3182ce; margin: 20px 0; border-radius: 4px;">
+        <h3 style="color: #2b6cb0; margin-top: 0; margin-bottom: 6px; font-size: 1.05em;">Food Information</h3>
+        <p style="margin: 0; font-size: 0.92em; color: #2d3748; line-height: 1.5;">
+          ${foodInfoText}
+        </p>
+      </div>
+
+      <!-- 6. Important Instructions -->
+      <p style="font-size: 0.85em; color: #555; background: #fafafa; padding: 10px; border-radius: 4px;">
+        * Registration confirmation does not guarantee final participation. Shortlisted participants will receive separate official confirmation. Please arrive 15–30 minutes before your scheduled event.
       </p>
 
-      <p style="font-size: 0.85em; color: #555;">
-        * For UNVEIL (Paper Presentation), please send your presentation abstract to <a href="mailto:drakenece2026@gmail.com">drakenece2026@gmail.com</a> at least 1 week prior to the event.
-      </p>
-
-      <p style="margin-top: 30px; font-size: 0.8em; color: #888;">
+      <!-- 7. Official Contact Information -->
+      <p style="margin-top: 24px; font-size: 0.8em; color: #888; border-top: 1px solid #eee; padding-top: 12px;">
         DRAKEN'26 Organizing Committee<br>
-        Anjalai Ammal Mahalingam Engineering College
+        Department of Electronics & Communication Engineering<br>
+        Anjalai Ammal Mahalingam Engineering College, Kovilvenni<br>
+        Contact: 811-001-3816 | Email: drakenece2026@gmail.com
       </p>
     </div>
   `;
@@ -303,6 +336,103 @@ function sendConfirmationEmails(data, registrationId, isAamec) {
   } catch (e) {
     Logger.log("Email error: " + e.message);
   }
+}
+
+/**
+ * ── SHORTLISTING SYSTEM FOR PAPER PRESENTATION / UNVEIL ─────────────────
+ * Adds a custom menu item in Google Sheets: DRAKEN'26 Tools -> Send Shortlist Emails
+ */
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu("DRAKEN'26 Tools")
+    .addItem("Send Paper Presentation Shortlist Emails", "sendPaperPresentationShortlistEmails")
+    .addToUi();
+}
+
+function sendPaperPresentationShortlistEmails() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(SHEET_ALL);
+  if (!sheet) return;
+
+  const data = sheet.getDataRange().getValues();
+  if (data.length <= 1) return;
+
+  const headers = data[0];
+  let shortlistColIdx = headers.indexOf("Shortlist Status");
+  let emailSentColIdx = headers.indexOf("Shortlist Email Sent");
+
+  // Create columns if missing
+  if (shortlistColIdx === -1) {
+    sheet.getRange(1, headers.length + 1).setValue("Shortlist Status");
+    shortlistColIdx = headers.length;
+  }
+  if (emailSentColIdx === -1) {
+    sheet.getRange(1, shortlistColIdx + 2).setValue("Shortlist Email Sent");
+    emailSentColIdx = shortlistColIdx + 1;
+  }
+
+  let sentCount = 0;
+
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    const regId = row[0];
+    const teamName = row[1];
+    const techEvent = String(row[5] || "").toUpperCase();
+    const m1Name = row[7];
+    const m1Email = row[9];
+    const m2Name = row[11];
+    const m2Email = row[13];
+
+    const isUnveil = techEvent.indexOf("UNVEIL") !== -1 || techEvent.indexOf("PAPER PRESENTATION") !== -1;
+    if (!isUnveil) continue;
+
+    const shortlistStatus = String(row[shortlistColIdx] || "").trim().toUpperCase();
+    const alreadySent = String(row[emailSentColIdx] || "").trim().toUpperCase();
+
+    if ((shortlistStatus === "SHORTLISTED" || shortlistStatus === "YES") && alreadySent !== "YES") {
+      const bodyHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; color: #111; line-height: 1.6;">
+          <h2 style="color: #c9a84c; border-bottom: 2px solid #c9a84c; padding-bottom: 8px;">DRAKEN'26 — Paper Presentation Shortlisting Confirmation</h2>
+          <p>Dear <strong>${teamName}</strong>,</p>
+          <p>We are pleased to inform you that your team (<strong>${regId}</strong>) has been <strong>SHORTLISTED</strong> for <strong>UNVEIL – Paper Presentation</strong> at DRAKEN'26!</p>
+          
+          <div style="background: #e6f7ff; border: 1px solid #91d5ff; border-left: 4px solid #1890ff; padding: 16px; margin: 20px 0; border-radius: 4px;">
+            <h3 style="color: #0050b3; margin-top: 0; margin-bottom: 8px;">Mandatory In-Person Attendance Required</h3>
+            <p style="margin: 0; font-size: 0.95em; color: #002c8c; line-height: 1.5;">
+              Participants who receive this shortlisting confirmation are required to <strong>attend DRAKEN'26 in person and participate in the Paper Presentation without fail</strong>. This email serves as your official confirmation of selection.
+            </p>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+            <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Registration ID:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee; color: #c9a84c;"><strong>${regId}</strong></td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Team Name:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${teamName}</td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Event:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">UNVEIL – Paper Presentation</td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Team Members:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${m1Name}, ${m2Name}</td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Symposium Date:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">26 September 2026</td></tr>
+            <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>Venue:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">Department of ECE, Anjalai Ammal Mahalingam Engineering College, Kovilvenni</td></tr>
+          </table>
+
+          <p style="margin-top: 30px; font-size: 0.8em; color: #888;">
+            DRAKEN'26 Organizing Committee<br>
+            Anjalai Ammal Mahalingam Engineering College
+          </p>
+        </div>
+      `;
+
+      const recipients = [m1Email, m2Email].filter(Boolean).join(",");
+      if (recipients) {
+        MailApp.sendEmail({
+          to: recipients,
+          subject: `DRAKEN'26 Paper Presentation Shortlisting Confirmation — ${regId}`,
+          htmlBody: bodyHtml
+        });
+        sheet.getRange(i + 1, emailSentColIdx + 1).setValue("YES");
+        sentCount++;
+      }
+    }
+  }
+
+  SpreadsheetApp.getUi().alert(`Shortlisting emails sent successfully to ${sentCount} team(s).`);
 }
 
 function getOrCreateSheet(ss, name) {

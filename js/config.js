@@ -53,7 +53,9 @@ const CONFIG = {
                 teamSize: '2 Members',
                 duration: '6 Minutes Presentation + 2 Minutes Q&A',
                 description: 'UNVEIL challenges participants to reveal and present research ideas, technical concepts, and innovations that go beyond conventional, well-known solutions – uncovering fresh perspectives on engineering and emerging technologies.',
+                extraInfo: '<div style="margin: 16px 0; padding: 14px 18px; background: rgba(201, 168, 76, 0.1); border-left: 3px solid #c9a84c; border-radius: 4px;"><h4 style="color: #c9a84c; margin-bottom: 6px; font-family: var(--font-display); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">Abstract Submission Deadline</h4><p style="font-size: 0.88rem; color: var(--text-primary); margin: 0; line-height: 1.5;">Participants registered for Paper Presentation must submit their abstract on or before <strong>18 September 2026</strong> through the official submission method provided by the organizers.</p></div>',
                 rules: [
+                    'Abstract Submission Deadline: Participants registered for Paper Presentation must submit their abstract on or before 18 September 2026 through the official submission method provided by the organizers.',
                     'Paper must relate to engineering, technology, or emerging innovations.',
                     'Maximum 20 slides permitted.',
                     'Content must be original and free from plagiarism.',

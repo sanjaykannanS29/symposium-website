@@ -8,10 +8,32 @@ const Registration = {
     init() {
         this.checkClosure();
         this.bindCollegeLogic();
+        this.bindEventNoticeLogic();
         this.bindSubmit();
         this.bindAcknowledgement();
         this.bindInputClearErrors();
         this.bindReturnBtn();
+    },
+
+    /**
+     * Dynamically toggle UNVEIL / Paper Presentation info notice box
+     */
+    bindEventNoticeLogic() {
+        const techSelect = document.getElementById('techEventSelect');
+        const unveilBox = document.getElementById('unveilRegInfoBox');
+        if (!techSelect || !unveilBox) return;
+
+        const updateVisibility = () => {
+            const val = (techSelect.value || '').toLowerCase();
+            if (val === 'unveil' || val.includes('paper presentation')) {
+                unveilBox.style.display = 'block';
+            } else {
+                unveilBox.style.display = 'none';
+            }
+        };
+
+        techSelect.addEventListener('change', updateVisibility);
+        updateVisibility();
     },
 
     /**
