@@ -126,24 +126,27 @@ const CONFIG = {
                 index: '04',
                 name: 'CINORA',
                 tagline: 'Lights, Camera, Imagination',
-                type: 'Short Film & Cinema Event',
+                type: 'Short Film & Cinema Challenge',
                 category: 'Non-Technical',
                 teamSize: '2 Members',
-                description: 'CINORA IS A CELEBRATION OF CINEMA THAT BRINGS TOGETHER FILMMAKERS AND MOVIE ENTHUSIASTS THROUGH SHORT FILM SCREENINGS AND ENGAGING CINEMA-BASED EVENTS.\n\nHave a short film? Showcase your story and take part in the CINORA experience.\n\nNo short film? No problem! If you have a passion for movies and a strong cinema knowledge, you can still register and participate in the events.',
-                extraInfo: '<div style="margin: 16px 0; padding: 14px 18px; background: rgba(201, 168, 76, 0.1); border-left: 3px solid #c9a84c; border-radius: 4px;"><h4 style="color: #c9a84c; margin-bottom: 6px; font-family: var(--font-display); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">IMPORTANT</h4><p style="font-size: 0.88rem; color: var(--text-primary); margin: 0 0 6px 0; line-height: 1.5;">🎬 <strong>SHORT FILM SUBMISSION IS MANDATORY FOR ELIGIBILITY FOR SHORT FILM PRIZES AND AWARDS.</strong></p><p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Whether you are a filmmaker or simply someone who lives and breathes cinema, CINORA has a place for you.</p></div>',
+                format: 'Short Film Competition + Cinema-Based Events & Games',
+                description: 'CINORA is a celebration of cinema that brings together aspiring filmmakers and movie enthusiasts through two exciting ways to participate. Participants with a short film can showcase their filmmaking, storytelling, and creative skills in the main Short Film Competition. Participants without a short film can also take part in engaging cinema-based events and games designed to test their movie knowledge, creativity, observation, and quick thinking.\n\nWhether you are a filmmaker or simply someone who loves cinema, CINORA gives everyone an opportunity to participate, compete, and win.',
                 rules: [
-                    'Participants with a short film can register and participate in CINORA.',
-                    'Participants without a short film can also register and participate in the cinema-based events.',
-                    'Only participants/teams who submit a short film will be eligible for short film prizes and awards.',
-                    'Submitted short films must be original works.',
-                    'Participants must follow the guidelines given by the event coordinators.'
+                    'Participants with a short film may submit their film and participate in the Short Film Competition.',
+                    'Participants without a short film can participate in the Cinema-Based Events & Games.',
+                    'Short film submission is mandatory only for eligibility for Short Film Competition prizes and awards.',
+                    'Participants taking part in cinema-based events and games are eligible for their respective prizes.',
+                    'Short films must be original and created by the participating team.',
+                    'All participants must follow the instructions and guidelines given by the event coordinators.',
+                    'Content must be appropriate and suitable for public screening.',
+                    'The decision of the judges/coordinators will be final.'
                 ],
                 judgingCriteria: [
                     'Storytelling & Creativity',
-                    'Direction & Shot Quality',
-                    'Editing & Presentation',
-                    'Theme Relevance',
-                    'Overall Impact'
+                    'Direction & Cinematography',
+                    'Editing & Technical Execution',
+                    'Cinema Knowledge & Observation',
+                    'Accuracy, Speed & Overall Performance'
                 ]
             },
             {
