@@ -40,6 +40,11 @@ const Events = {
             'aamec-got-talent': '🎙️ Entertainment & Stage Spotlight'
         };
         const badgeText = themeBadges[event.id] || '🐉 Dragon ECE Core';
+        const statusBadge = event.isFull ? `
+            <div style="margin-top: 8px;">
+                <span style="display: inline-block; padding: 3px 10px; background: rgba(220, 38, 38, 0.2); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.4); border-radius: 4px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;">REGISTRATION FULL</span>
+            </div>
+        ` : '';
 
         return `
             <article class="event-card event-theme-${event.id}" data-event-id="${event.id}" data-event-theme="${event.id}" tabindex="0" role="button"
@@ -56,6 +61,7 @@ const Events = {
                         <span class="event-theme-badge">${badgeText}</span>
                     </div>
                     <p class="event-card-type">${event.type}</p>
+                    ${statusBadge}
                     <span class="event-card-arrow" aria-hidden="true">→</span>
                 </div>
             </article>
@@ -139,6 +145,10 @@ const Events = {
 
     buildModalBody(event) {
         let html = '';
+
+        if (event.isFull) {
+            html += `<div style="margin: 0 0 16px 0; padding: 10px 14px; background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220, 38, 38, 0.4); border-left: 4px solid #ef4444; border-radius: 4px; color: #f87171; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px;">⚠️ REGISTRATION FULL</div>`;
+        }
 
         html += `<div class="modal-type">${event.type}</div>`;
         html += `<p class="modal-description">${event.description}</p>`;

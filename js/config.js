@@ -126,25 +126,22 @@ const CONFIG = {
                 index: '04',
                 name: 'CINORA',
                 tagline: 'Lights, Camera, Imagination',
-                type: 'Short Film Challenge',
+                type: 'Short Film & Cinema Event',
                 category: 'Non-Technical',
-                teamSize: '2 Members (Registered)',
-                duration: 'Video Duration: 3–4 Minutes',
-                format: 'Theme Reveal → Shooting & Editing → Screening & Judging',
-                description: 'CINORA turns participants into filmmakers for a day. Teams are given a theme/prompt on the spot and must write, shoot, and edit a short film within a strict, fast time limit – testing storytelling, creativity, direction, and quick execution under pressure.',
+                teamSize: '2 Members',
+                description: 'CINORA IS A CELEBRATION OF CINEMA THAT BRINGS TOGETHER FILMMAKERS AND MOVIE ENTHUSIASTS THROUGH SHORT FILM SCREENINGS AND ENGAGING CINEMA-BASED EVENTS.\n\nHave a short film? Showcase your story and take part in the CINORA experience.\n\nNo short film? No problem! If you have a passion for movies and a strong cinema knowledge, you can still register and participate in the events.',
+                extraInfo: '<div style="margin: 16px 0; padding: 14px 18px; background: rgba(201, 168, 76, 0.1); border-left: 3px solid #c9a84c; border-radius: 4px;"><h4 style="color: #c9a84c; margin-bottom: 6px; font-family: var(--font-display); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">IMPORTANT</h4><p style="font-size: 0.88rem; color: var(--text-primary); margin: 0 0 6px 0; line-height: 1.5;">🎬 <strong>SHORT FILM SUBMISSION IS MANDATORY FOR ELIGIBILITY FOR SHORT FILM PRIZES AND AWARDS.</strong></p><p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Whether you are a filmmaker or simply someone who lives and breathes cinema, CINORA has a place for you.</p></div>',
                 rules: [
-                    'Short films directed and produced by participating team only.',
-                    'Video duration must be 3–4 minutes.',
-                    'Voice and audio must be clear throughout.',
-                    'Content must be original and appropriate.',
-                    'AI tools may be used for editing assistance.',
-                    'Offensive or inappropriate content is strictly prohibited.',
-                    'Judges\' decision will be final and binding.'
+                    'Participants with a short film can register and participate in CINORA.',
+                    'Participants without a short film can also register and participate in the cinema-based events.',
+                    'Only participants/teams who submit a short film will be eligible for short film prizes and awards.',
+                    'Submitted short films must be original works.',
+                    'Participants must follow the guidelines given by the event coordinators.'
                 ],
                 judgingCriteria: [
                     'Storytelling & Creativity',
                     'Direction & Shot Quality',
-                    'Editing within Time Limit',
+                    'Editing & Presentation',
                     'Theme Relevance',
                     'Overall Impact'
                 ]
@@ -153,6 +150,7 @@ const CONFIG = {
                 id: 'gameverse',
                 index: '05',
                 name: 'GAME VERSE',
+                isFull: true,
                 tagline: 'Play Learn Conquer',
                 type: 'Rapid Mini-Games Challenge',
                 category: 'Non-Technical',

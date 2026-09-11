@@ -1069,7 +1069,12 @@ ol {
     font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.8;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
+    white-space: pre-line;
+}
+
+.modal-extra-info {
+    margin-bottom: 28px;
 }
 
 .modal-meta {
