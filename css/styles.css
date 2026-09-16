@@ -1732,9 +1732,8 @@ ol {
 
 .location-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: center;
+    grid-template-columns: 1fr;
+    gap: 36px;
 }
 
 .location-title {
